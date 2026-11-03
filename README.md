@@ -1,5 +1,13 @@
 # Logical Cloud
 
+**The long-term project is an architecture for near-real-time, factorized, multi-agent software development—not only remote execution.** Start with the [Constitution](CONSTITUTION.md) and its [agent entrypoint](AGENTS.md): voice-driven modification, independently substitutable UI style / localization / form factors, concise hierarchies of intent, parallel agents, self-play experiments, and device-independent compute are the guiding problems.
+
+The existing distributed-execution simulator remains an early exploratory component, not the definition of the whole system.
+
+---
+
+# Logical Cloud
+
 **Build an application once; factor out where code, data, and computation happen.**
 
 Logical Cloud explores a world in which the distinction between *local*, *remote device*, and *cloud* stops being an application-level burden. Code should be delivered lazily, execution can happen on a different device, and an interface should subscribe to its results as naturally as it plays a video stream.
