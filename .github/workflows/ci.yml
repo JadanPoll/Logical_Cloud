@@ -1,0 +1,37 @@
+name: Logical Cloud invariants
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deterministic-simulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Execute unit and invariant tests
+        run: python -m unittest discover -s tests -v
+      - name: Check default example and 6 controlled experiment cases
+        run: |
+          python -m logical_cloud simulate examples/split_camera.json --output /tmp/base.json
+          python -m logical_cloud compare examples/split_camera.json --output /tmp/cases.json --html /tmp/dashboard.html
+          python -c 'import json; c=json.load(open("/tmp/cases.json")); assert len(c)==6; assert len({x["application_sha256"] for x in c})==1'
+      - name: Upload self-contained simulator report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logical-cloud-experiment-report
+          path: |
+            /tmp/base.json
+            /tmp/cases.json
+            /tmp/dashboard.html
+          if-no-files-found: warn

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "name": "Camera inference and UI across a television, edge host, and cloud",
+  "application": {
+    "artifacts": [
+      {"id": "camera-capture-v1", "bytes": 20000, "home": "tv"},
+      {"id": "detector-v1", "bytes": 2000000, "home": "edge"},
+      {"id": "overlay-v1", "bytes": 10000, "home": "tv"}
+    ],
+    "stages": [
+      {"id": "capture", "artifact": "camera-capture-v1", "deps": [], "work_units": 60, "input_bytes": 1000, "output_bytes": 400000},
+      {"id": "detect", "artifact": "detector-v1", "deps": ["capture"], "work_units": 2400, "input_bytes": 0, "output_bytes": 3000},
+      {"id": "overlay", "artifact": "overlay-v1", "deps": ["detect"], "work_units": 90, "input_bytes": 0, "output_bytes": 6000}
+    ]
+  },
+  "fabric": {
+    "devices": [
+      {"id": "tv", "speed": 2, "slots": 1, "cache_bytes": 100000},
+      {"id": "edge", "speed": 24, "slots": 2, "cache_bytes": 5000000},
+      {"id": "cloud", "speed": 60, "slots": 4, "cache_bytes": 10000000}
+    ],
+    "links": [
+      {"id": "lan", "a": "tv", "b": "edge", "latency_ms": 3, "bandwidth_bytes_per_ms": 20000},
+      {"id": "wan", "a": "edge", "b": "cloud", "latency_ms": 22, "bandwidth_bytes_per_ms": 3000}
+    ]
+  },
+  "demand": {"requester": "tv", "arrivals_ms": [0, 60, 120, 180, 240]},
+  "placement": {"capture": "tv", "detect": "edge", "overlay": "tv"},
+  "variants": [
+    {"id": "all-local", "set": {"placement.detect": "tv"}},
+    {"id": "edge-inference", "set": {"placement.detect": "edge"}},
+    {"id": "cloud-inference", "set": {"placement.detect": "cloud"}}
+  ],
+  "axes": {
+    "link.lan.latency_ms": [3, 15]
+  }
+}
