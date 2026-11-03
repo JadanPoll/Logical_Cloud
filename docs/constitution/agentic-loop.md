@@ -22,17 +22,19 @@ The build host, runtime device, and artifact storage may be different machines. 
 
 **2. Activate.** Retrieve the smallest applicable intent-set neighborhood, authoritative factors, previous relevant decisions, and source anchors. Admit unknown constraints.
 
-**3. Factor.** State the intended single-variable or limited-variable substitution. Prefer an existing mechanism or solved precedent over inventing a new subsystem.
+**3. Check precedents.** Read the owning set's implementation annotations and version-pinned source precedents, especially real GitHub implementations and tests; do not overwrite source-backed decisions because a different framework is more familiar from training.
 
-**4. Vary.** Produce one useful candidate quickly; create competing hypotheses or variants where the decision genuinely benefits from comparison. Let unpromising branches die cheaply without destroying their history.
+**4. Factor.** State the intended single-variable or limited-variable substitution. Prefer an existing mechanism or solved precedent over inventing a new subsystem.
 
-**5. Observe.** Present incremental visible feedback, bounded checks, targeted simulation, or direct device evidence according to the risk. Show why the result differs, not only whether a job was green.
+**5. Vary.** Produce one useful candidate quickly; create competing hypotheses or variants where the decision genuinely benefits from comparison. Let unpromising branches die cheaply without destroying their history.
 
-**6. Critique.** Compare against the actual user goal and current baseline. Reconsider the problem representation when the experiment fails to answer the question. Give the human an easy path to steer, reject, or refine.
+**6. Observe.** Present incremental visible feedback, bounded checks, targeted simulation, or direct device evidence according to the risk. Show why the result differs, not only whether a job was green.
 
-**7. Promote or resume.** A proposal remains a proposal until authorized promotion. Preserve a concise trace of variant factors, evidence, decision, and unresolved limitations so the next agent can continue.
+**7. Critique.** Compare against the actual user goal and current baseline. Reconsider the problem representation when the experiment fails to answer the question. Give the human an easy path to steer, reject, or refine.
 
-This is a revisitable **ring**, not a strict seven-step ceremony. A trivial typography adjustment may jump straight from activation to preview; a surprising failure may move back to orientation.
+**8. Certify, promote or resume.** Include the narrow material numbered constitutional clauses, source references, and a qualified statement of evidence; distinguish whether the method was followed from whether it achieved the intended result. A proposal remains a proposal until authorized promotion. Preserve a concise trace of variant factors, inspected source precedents, applicable numbered clauses, evidence, decision, and unresolved limitations so the next agent can continue.
+
+This is a revisitable **ring**, not a strict eight-step ceremony. A trivial typography adjustment may jump straight from activation to preview; a surprising failure may move back to orientation.
 
 ## Five concurrent agents are normal, not exceptional
 
@@ -74,3 +76,10 @@ When an attempt fails, distinguish:
 - **The orchestration failed:** files, dependencies, authority, or timing made a reasonable request cumbersome; fix the substrate rather than making the user repeat work.
 
 Stop an experiment when its expected value falls below its cost, a better path is evident, or an authoritative constraint prevents safe advancement. Retain the user-visible next useful action. Never convert internal bookkeeping into a hostage state.
+
+
+## Constitution-aware self-play
+
+Each meaningful iteration can update **two hypotheses** independently: a hypothesis about the software, and a hypothesis about whether the governing `LC-XX.Y` clause is sufficient under the current situation. A failure should therefore be traced in the [axiom calculus](axiom-calculus.md), with enough source-anchored evidence to distinguish a violated rule, a faithfully followed but inadequate rule, an incorrect model, and undetermined claims. Useful outcomes include a fix, a rejected variant, a narrow new exception, or an amendment supported by a concrete counterexample.
+
+This is not a demand for agents to endlessly justify themselves. Small cited decisions and reproducible differences are sufficient in ordinary work; only consequential disputes need deeper audits. Preserve old code/reasons before changing it, and do not require the human to referee preference disagreements between models.

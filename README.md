@@ -2,6 +2,8 @@
 
 **The long-term project is an architecture for near-real-time, factorized, multi-agent software development—not only remote execution.** Start with the [Constitution](CONSTITUTION.md) and its [agent entrypoint](AGENTS.md): voice-driven modification, independently substitutable UI style / localization / form factors, concise hierarchies of intent, parallel agents, self-play experiments, and device-independent compute are the guiding problems.
 
+The new constitutional additions include a [numbered axiom calculus](docs/constitution/axiom-calculus.md) for inspecting whether agents followed material rules and whether the rules actually worked, and [research-paper-style source provenance](docs/constitution/provenance.md) linking intent sets to examined implementations, local adaptations, and verification evidence.
+
 The existing distributed-execution simulator remains an early exploratory component, not the definition of the whole system.
 
 ---

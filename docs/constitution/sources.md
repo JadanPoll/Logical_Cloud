@@ -43,3 +43,11 @@ Logical Cloud's factorization is a question-dependent engineering representation
 **We do not require:** a universal graph database, exhaustive ontology, globally mandatory checklists, numerically scored agent cognition, a monolithic tool, or a proof of optimality. We will revise the constitution if actual multi-agent development makes any of its machinery unhelpful.
 
 A constitutional citation explains *why a method might guide an action*; it is not independent evidence that a proposed implementation works.
+
+## New constitutional additions: provenance and axiomatic self-correction
+
+**Research-paper-style sources (LC-14)** adapts REM's insistence on studying solved implementations, RSM's source/evidence distinctions, and FKEN's recovery of knowledge by source anchors into a software-specific rule: consequential design choices should cite **actual implementation code** at versioned revisions, plus their local adaptations and verification limits. This requirement is motivated by costly repeated agent reconstruction and incompatible training-derived preferences. See [provenance and inspected GitHub code examples](provenance.md).
+
+**Numbered axiomatic certificates (LC-15)** draws particularly from RSM's stable-address clauses and compact method traces, REM's realistic-failure-led development, and FKEN's selective application certificates. It introduces a decision-relative obligation calculus and distinguishes **did the agent follow the provision?** from **did it achieve the goal?** The latter can falsify the sufficiency of a faithfully applied constitution without implying all behavior is formally decidable. See [axiom calculus and counterexample procedure](axiom-calculus.md).
+
+Do not confuse the RSM/REM/FKEN *principles that motivated these rules* with empirical evidence that the rules improve this project's developer experience; the acceptance workflows are how we assess that claim.

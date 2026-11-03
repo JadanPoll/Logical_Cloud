@@ -12,6 +12,18 @@ The project is about **agentic software architecture and the development process
 
 The articles below are *operational principles*, not a ceremonial checklist. Invoke a principle when it addresses a real difficulty. Explain departures when they materially affect the goal.
 
+## Axiomatic reading of the constitution
+
+Every numbered clause names a revisable, operational claim. For a consequential agent action, read it as **When → Must → Witness → Exception**, not as vague advice:
+
+`Applicable(rule, context) ∧ not Exception(rule, context) ⇒ Obligation(rule, action)`.
+
+An agent can **cite** the rule that informed its choice and provide a short, independently inspectable **certificate**: why it applied, what was done, what evidence supports that claim, and what remains uncertain. A certificate is *evidence about rule-following*, not a theorem guaranteeing correct software or a successful user experience. The full method, including `supported / violated / undetermined / not applicable` verdicts and counterexamples, is in the [axiom calculus](docs/constitution/axiom-calculus.md).
+
+Separate two questions: **Did the agent follow the applicable rule?** and **Did following it achieve the goal?** A verified negative answer to the first is an agent/process failure; a supported positive answer to the first and a verified negative answer to the second is evidence for reconsidering the rule, assumptions, model, or its interaction with other rules. Each failure should be recoverable enough to amend a specific provision, not merely become an occasion for generic agent criticism.
+
+Use the narrowest material clause IDs (for example, `LC-14.02`), not decorative references to whole sections. **No clause is a universal paperwork requirement**: interpretation, applicability and evidence must remain proportionate to the actual change and the risks of getting it wrong.
+
 ## LC-01 — Preserve the problem, not the accidental solution
 
 **LC-01.01 Purpose before mechanism.** Interpret the user's request in terms of the experience or capability sought. A spoken example may denote a *class* of changes, not a literal implementation prescription. Recover the unstated larger objective before proposing substantial restructuring.
@@ -150,12 +162,58 @@ The articles below are *operational principles*, not a ceremonial checklist. Inv
 
 ---
 
+## LC-14 — Research-grade provenance before speculative implementation
+
+**LC-14.01 Precedent-first obligation.** When choosing or replacing a consequential mechanism, agents shall investigate existing *actual implementations* before creating a new one; prefer examining the relevant source and tests in this project or an appropriate GitHub repository over relying solely on API documentation or learned conventions. Record the search scope when suitable source cannot reasonably be found. The applicability test is whether the choice bears on a meaningful contract, algorithm, architecture or known failure—not whether a line of code was typed.
+
+**LC-14.02 Source-anchored annotation.** An adopted nontrivial design decision shall point to the specific source mechanism that informed it, with a stable citation key, versioned source permalink, and identification of the relevant code or test where practical. An agent must not claim it read or verified code it did not inspect. A generic project homepage, an unpinned URL, or “standard practice” is not an adequate citation for a claim about an actual implementation.
+
+**LC-14.03 End-of-set reference rule.** An intent set shall be able to expose a compact end-of-set **References** list, or a link to its canonical parent/shared ledger, connecting its annotated design choices to external precedents and local code. This makes relevant implementation ideas auditable as a unit, as with a research paper, without duplicating a bibliography across every dependent file.
+
+**LC-14.04 Provenance is not correctness.** Distinguish *examined upstream implementation*, *locally adapted*, *verified here*, *simulated*, *hypothesized*, and *superseded* claims. Citation establishes where an idea came from, not that it works in a changed environment. Source license, applicability, constraints, and consequential test results remain independent questions.
+
+**LC-14.05 Training-prior disagreements require evidence.** An incoming agent shall recover relevant local decisions and sources before replacing working architecture with a pattern it personally favors. Contested choices should identify the explicit obligation, original source and local assumptions, an alternate implementation or counterexample, and the least costly discriminating experiment. Previous rationale must remain recoverable even after supersession.
+
+**LC-14.06 Novelty is a declared experiment.** When no existing implementation suitably addresses a requirement, innovation is permitted only as an explicitly labeled, scoped hypothesis: document what was searched, why precedents did not transfer, what assumption is novel, and what economical observation could refute it. Do not invent citations or disguise speculation as established practice.
+
+**LC-14.07 Source-path economy.** Do not demand a paper, citation, or web search for syntax, routine glue, or already justified repetitions. Reuse the parent set's canonical references. A small number of precise implementation citations is more valuable than extensive decorative documentation. If a reference mechanism generates more work than it saves, simplify it under LC-13.03 without sacrificing consequential traceability.
+
+**LC-14.08 Reference auditability.** If an implementation is later found mistaken, the owning set shall make it feasible to trace **intent → decision annotation → upstream code precedent → local implementation → observed evidence or failure**. The burden should be proportional to the defect; a newcomer should not need a whole-repository or whole-chat forensic reconstruction to locate the responsible reasoning.
+
+See [Research-paper-style provenance](docs/constitution/provenance.md) for exact GitHub code precedents inspected for this constitution, and the distinction between prior work and local verification.
+
+## LC-15 — Numbered axioms, certificates, counterexamples and amendments
+
+**LC-15.01 Addressable normative propositions.** A substantive clause has a stable identifier and an operational meaning: **antecedent (when), obligation (must), inspectable witness (evidence), and admissible exception (unless)**. Related prose explains these claims but does not silently extend them to unrelated cases. Existing IDs cannot be reassigned to mean something different.
+
+**LC-15.02 Clause-specific justification.** For a consequential change or investigation, cite the narrowest actually material clause(s) and give a compact certificate of *why each applied* and *what action satisfied it*. Link a source precedent where LC-14 applies. Do not replace a certificate with an agent's assertion, an impressive amount of testing, or generic statements that “the constitution was followed.”
+
+**LC-15.03 Four-valued judgment.** Evaluate a material clause as **supported**, **violated**, **undetermined**, or **not applicable** with respect to the facts available and the relevant evidence. Missing evidence is undetermined, not a presumption of compliance. An exception must be explicit, justified, and inspectable; it cannot be invented after a failure to erase a violation.
+
+**LC-15.04 Separate method from result.** Rule compliance and successful user outcome are different claims. A passed test, cited upstream source, or faithful methodology does not itself establish the desired experience. An unsuccessful outcome does not automatically prove a rule was violated. Record both assessments independently.
+
+**LC-15.05 Constitutional falsification.** If an independently inspectable case supports the conclusion that applicable clauses were followed while the operative goal still failed, investigate whether a rule's antecedent, obligation, exception, omitted interaction, or assumed model was inadequate. The possibility of a *faithfully followed but inadequate constitution* is fundamental to its improvement.
+
+**LC-15.06 Failure case before amendment.** Preserve the smallest useful failure witness: intent and baseline, relevant clauses, what the agent could know when acting, cited precedents, actions actually taken, observed outcome, competing causal explanations, and the cheapest discriminating check. Distinguish agent violation, rule inadequacy, model error, misunderstood goal, and unresolved evidence instead of editing doctrine reflexively.
+
+**LC-15.07 Stable supersession.** An amendment shall identify the prior clause and version, motivating counterexample, exact change in applicability/obligation/exception, and its consequences for other realistic cases. Retain original text or a recoverable history; create a new numbered proposition or explicit supersession where meaning materially changes. Never quietly rewrite a clause to claim past compliance.
+
+**LC-15.08 Multi-agent continuity.** Certificates and citations belong to the project, not the agent's private recollection. New agents should be able to reconstruct relevant rules, prior choices, and unresolved failures without importing inconsistent default preferences from training. They may challenge old decisions, but must surface grounds and evidence.
+
+**LC-15.09 Non-circular certification.** A builder's statement of compliance cannot alone certify itself; use external artifacts or inspectable work when material. A certificate with incomplete coverage is a qualified claim, not a formal proof that all applicable laws were obeyed. If an agent cannot inspect a prerequisite, record **undetermined** and the meaningful limitation.
+
+**LC-15.10 Engineering stopping rule.** Certification shall be as lightweight as suffices for future diagnosis and justified confidence. Trivial edits do not require exhaustive rule audits. More rigorous checking should be triggered by consequential risk, conflicting constraints, observed regressions, or amendments—not the desire to appear mathematically sophisticated.
+
+The [axiom calculus and failure protocol](docs/constitution/axiom-calculus.md) provide worked judgments and a concise certificate; the [acceptance cases](docs/constitution/acceptance.md) test the system against real agent development workflows.
+
 ## How to use this constitution
 
 **Human or voice user:** express the desired effect; optionally name the target form factor, constraints, or preferred variant. You need not know implementation files, build machines, or transports.
 
-**Agent beginning a change:** recover the big-picture intent; navigate only relevant intent sets; identify the factorizable change surface; propose the smallest meaningful variation; obtain bounded evidence; return an inspectable result and uncertainties. See [agentic loop](docs/constitution/agentic-loop.md).
+**Agent beginning a change:** cite relevant numbered clauses and examined implementation precedents, with a compact evidence trail when the decision is consequential; recover the big-picture intent; navigate only relevant intent sets; identify the factorizable change surface; propose the smallest meaningful variation; obtain bounded evidence; return an inspectable result and uncertainties. See [agentic loop](docs/constitution/agentic-loop.md).
 
 **Architect modifying the platform:** demonstrate why the new mechanism earns its complexity against actual workflows. See [acceptance cases](docs/constitution/acceptance.md).
+
+**Rule certificates:** see [axiom calculus](docs/constitution/axiom-calculus.md). **Code precedents:** see [research-style reference ledger](docs/constitution/provenance.md).
 
 **Provenance:** these principles are a selective, project-specific synthesis of [REM, RSM and FKEN](docs/constitution/sources.md). Their source specifications remain independent and authoritative for their own domains.

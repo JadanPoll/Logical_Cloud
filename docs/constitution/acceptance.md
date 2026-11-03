@@ -70,9 +70,39 @@ These cases are **requirements for future systems**, not statements about curren
 
 **Failure signatures:** explanations only available from an enormous chat log, duplicate contradictory documentation, claims of verification without evidence, or no way to identify which version is on the device.
 
+## H. Agents disagree because of differing training-derived conventions
+
+**Starting point:** a working camera/display subsystem has a brief intent hierarchy, a code reference at a pinned commit, a local adaptation, and known checks. A new agent prefers another design.
+
+**Request:** “Improve responsiveness without breaking the existing camera behavior.”
+
+**Success:** The agent recovers the relevant `LC-XX.Y` clauses and existing source-backed design, identifies a specific failing obligation, and compares an actually inspected alternative or a local counterexample. It records which claims were upstream-observed vs locally verified. If the proposal is merely a preference, it preserves the baseline rather than performing an unnecessary rewrite.
+
+**Failure:** an unreferenced new implementation; an invented source; vague “industry standard” justification; past citations treated as infallible; or a complete rewrite solely because it matches the new agent's learned conventions.
+
+## I. A rule-following agent fails: inspect the constitution
+
+**Starting point:** an agent examines a pinned upstream theme implementation, factors a TV overlay's styling, runs applicable checks, and truthfully labels its preview as simulated.
+
+**Observed failure:** On a real Fire TV remote, an unusual key-up event makes focus disappear. The requested UX is still unsatisfactory.
+
+**Success:** Audit the relevant material clauses: `LC-02.02` (factor), `LC-14.01` (precedent), `LC-09.02` (simulation evidence), `LC-04.03` (form-factor input), and `LC-15.04–15.07` (compliance vs outcome, failure, amendment). Mark each **supported/violated/undetermined/not applicable** using independent evidence. Determine if this is an implementation defect, an omitted cross-factor interaction, a mistaken physical model, or an inadequate constitutional requirement. Preserve the baseline and shortest relevant witness; change the rule only if the case genuinely supports it.
+
+**Failure:** the agent asserts “I followed the constitution” without evidence; all failing tests are construed as proof of misconduct; successful citations are construed as proof of working code; or a rule is quietly rewritten to absolve a previous failure.
+
+## J. Fault provenance without whole-project reconstruction
+
+**Starting point:** an older implementation was copied from an upstream project; a regression now appears and its original author/agent is gone.
+
+**Request:** “Why does this work this way, and what actually broke?”
+
+**Success:** A newly onboarded agent follows the owning set's end-of-set References to a pinned upstream GitHub implementation, then finds the local adaptation and its earlier evidence, compares changed assumptions, and identifies the smallest corrective factor. The decision annotation preserves prior rationale and is easy to supersede without erasing history.
+
+**Failure:** unexplained unpinned URLs, no relation between source and the local code, heavy reconstructive context gathering, or defaulting to a new solution before checking the one already used.
+
 ## The scoreboard should be holistic
 
-Compare candidate architectures on **time to first meaningful preview**, **time to accepted update**, **number of independently modified authoritative definitions**, **amount of context reacquired**, **number and severity of cross-factor inconsistencies**, **parallel-agent blocking time**, **real user-flow success**, **cost of necessary verification**, **rollback/resumption reliability**, and **ability to recover why the result exists**.
+Compare candidate architectures on **time to first meaningful preview**, **time to accepted update**, **number of independently modified authoritative definitions**, **amount of context reacquired**, **number and severity of cross-factor inconsistencies**, **parallel-agent blocking time**, **real user-flow success**, **cost of necessary verification**, **rollback/resumption reliability**, and **ability to recover why the result exists**, **upstream-to-local implementation traceability**, **preference-driven unnecessary rewrites**, and **ability to classify a failed result as rule violation versus rule inadequacy**.
 
 Do not invent numeric targets before there is a credible baseline. A short honest comparison, observed traces, and known uncertainty are better than a manufactured score. Benchmarks should reflect actual user flows and frequent realistic variation. Expand to rare but consequential failures when the stated risk justifies the cost.
 

@@ -77,3 +77,11 @@ A certificate is an *intent claim*. Verified, observed, simulated, proposed, and
 Refine an intent set when a concrete question exposes a consequential ambiguity. Otherwise stop at an intelligible stable interface. Carry forward a short explanation of an unexpected architectural decision when future agents would otherwise repeatedly rediscover it.
 
 The target is **knowledge reuse without repeated memory work**: the next agent should confidently find what matters, distinguish obligations from conjecture, and begin experimenting.
+
+## Research-style annotations and references belong to the set
+
+An **intent certificate** describes a promise; a **decision annotation** records the reason a particular implementation approach was selected. Keep them distinct. For a consequential mechanism, record a compact citation key beside the adopted choice and an **end-of-set References** section (or link to one canonical shared ledger), ideally pointing to source code and tests at a pinned Git revision rather than a moving document. This lets agents inspect relevant precedents as a unit and trace a mistaken local implementation back to the actual source mechanism.
+
+A reference chain should be navigable both ways: **intent → decision → code precedent → local implementation → local evidence**, and back from a failure to the rule or source that motivated it. A cited precedent is not automatically verified locally; state what was actually observed, modeled, or untested. Multiple children may reference one parent's source without copying a growing bibliography. This is [LC-14](../../CONSTITUTION.md), developed in [research-style provenance](provenance.md).
+
+An agent onboarding into this set must read the applicable parent purpose and the relevant source-backed decisions before substituting a training-familiar alternative. If the established reasoning is wrong, preserve its original evidence and challenge it with a concrete test or competing code precedent. For consequential changes, a brief [LC-15 rule certificate](axiom-calculus.md) records which numbered obligations were applied and whether the observed outcome actually met the goal. Avoid formal paperwork on insignificant edits.
