@@ -1,0 +1,349 @@
+{
+  "schema_version": 1,
+  "id": "playroom-agentic-3d",
+  "intent": {
+    "goal": "Give people a fun, quickly playable TV-first 3D world that agents can expand and revise without the human managing the engine or build machinery.",
+    "invariants": [
+      "A playable idea is more important than committing to a game engine.",
+      "The human can revise the same world later without losing a known-good version.",
+      "An optional external worker may improve fidelity but cannot be mandatory for every useful experience."
+    ]
+  },
+  "factors": [
+    {
+      "id": "renderer",
+      "question": "How are world images produced?",
+      "relevance": "Rendering fidelity, TV hardware limits and agent iteration cost.",
+      "options": [
+        {
+          "id": "android_native",
+          "meaning": "Android OpenGL ES/native renderer; requires device-specific testing.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "browser_webgl",
+          "meaning": "WebGL/browser rendering; potentially easier to prototype, not proven on target TV.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "streamed_gpu",
+          "meaning": "A remote renderer streams frames; latency/network and expense matter.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "simulation",
+      "question": "Where does game/world state advance?",
+      "relevance": "Authority over real-time gameplay, latency and offline behavior.",
+      "options": [
+        {
+          "id": "tv_local",
+          "meaning": "Local state updates and collision on the TV.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "remote_worker",
+          "meaning": "Remote state advancement with round-trip interaction.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "hybrid",
+          "meaning": "Local predictions with asynchronous remote world simulation.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "presentation",
+      "question": "What does the TV display as its direct interactive surface?",
+      "relevance": "A streamed scene and a local scene have different contracts.",
+      "options": [
+        {
+          "id": "local_frames",
+          "meaning": "TV displays locally constructed frames.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "video_stream",
+          "meaning": "TV displays decoded frames received from elsewhere.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "interaction",
+      "question": "What input experience is usable for real players?",
+      "relevance": "A D-pad cannot be assumed equivalent to full 3D camera control.",
+      "options": [
+        {
+          "id": "remote_dpad",
+          "meaning": "Minimal remote controls with navigation-friendly game design.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "gamepad",
+          "meaning": "Game controller with continuous movement and camera control.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "ipad_companion",
+          "meaning": "Second-screen gestures, virtual controls and semantic actions.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "assets",
+      "question": "How can scenes, models and animations evolve independently?",
+      "relevance": "Agent updates should not require replacing game execution for art changes.",
+      "options": [
+        {
+          "id": "bundled",
+          "meaning": "Content is bundled with the current application artifact.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "versioned_remote",
+          "meaning": "Data-only asset packs fetched on demand with hash checks and rollback.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "world_language",
+      "question": "How do agents describe or update the world?",
+      "relevance": "Scene representation determines which small edits can be made independently.",
+      "options": [
+        {
+          "id": "scene_json",
+          "meaning": "Restricted declarative scene/behavior data with versioned semantics.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "engine_project",
+          "meaning": "Engine-native scene and script project.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "generated_mesh",
+          "meaning": "Agent-generated meshes and motions, independent of gameplay semantics.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "continuity",
+      "question": "Which world identity and progress must survive updates?",
+      "relevance": "World ownership and user progress are separate from renderer or simulation.",
+      "options": [
+        {
+          "id": "local_save",
+          "meaning": "Local durable world and player-state snapshots.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "resumable_sync",
+          "meaning": "Versioned recoverable state shared across trusted devices.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "agent_workflow",
+      "question": "How is the next variant proposed and verified?",
+      "relevance": "Fast creative iteration without letting updates destroy the last playable candidate.",
+      "options": [
+        {
+          "id": "git_build",
+          "meaning": "Git/CI produces a candidate implementation or verified asset.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "scene_preview",
+          "meaning": "Restricted scene change and immediate preview without rebuilding the engine.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "human_curated",
+          "meaning": "A human selects and publishes versioned changes manually.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "browser_prototype",
+      "purpose": "Learn whether tiny 3D gameplay is fun and viable before choosing an engine.",
+      "set": {
+        "renderer": "browser_webgl",
+        "simulation": "tv_local",
+        "presentation": "local_frames",
+        "interaction": "remote_dpad",
+        "assets": "bundled"
+      }
+    },
+    {
+      "id": "native_world",
+      "purpose": "Test local 3D rendering and independent asset updates against real Fire hardware.",
+      "set": {
+        "renderer": "android_native",
+        "simulation": "tv_local",
+        "presentation": "local_frames",
+        "interaction": "gamepad",
+        "assets": "versioned_remote"
+      }
+    },
+    {
+      "id": "remote_fidelity",
+      "purpose": "Explore high-fidelity worlds with a remote GPU without treating the network path as solved.",
+      "set": {
+        "renderer": "streamed_gpu",
+        "simulation": "remote_worker",
+        "presentation": "video_stream",
+        "interaction": "ipad_companion",
+        "assets": "versioned_remote"
+      }
+    }
+  ],
+  "intersections": [
+    {
+      "id": "remote_video_presentation",
+      "when": {
+        "renderer": "streamed_gpu"
+      },
+      "requires": {
+        "presentation": "video_stream"
+      },
+      "strength": "design_contract",
+      "reason": "This proposed remote-rendering option delivers visual frames as a video stream."
+    },
+    {
+      "id": "native_local_frame",
+      "when": {
+        "renderer": "android_native"
+      },
+      "requires": {
+        "presentation": "local_frames"
+      },
+      "strength": "design_contract",
+      "reason": "The native rendering option owns local frame presentation."
+    },
+    {
+      "id": "remote_state_continuity",
+      "when": {
+        "simulation": "remote_worker"
+      },
+      "requires": {
+        "continuity": "resumable_sync"
+      },
+      "strength": "hypothesis",
+      "reason": "Meaningful return to a remotely advanced world may require a recoverable shared state contract; investigate alternatives."
+    },
+    {
+      "id": "remote_input_lens",
+      "when": {
+        "interaction": "remote_dpad"
+      },
+      "requires": {
+        "world_language": "scene_json"
+      },
+      "strength": "hypothesis",
+      "reason": "A constrained declarative world model might allow agent-designed D-pad-friendly control without heavy engine rewrites. This is not established."
+    }
+  ],
+  "experiments": [
+    {
+      "id": "small_scene_prototype",
+      "question": "Can a 3D object be controlled comfortably through the standard remote?",
+      "focus": {
+        "renderer": "browser_webgl",
+        "interaction": "remote_dpad"
+      },
+      "witness": "Physical Fire TV D-pad trace, frame timing, and a human play impression.",
+      "status": "proposed"
+    },
+    {
+      "id": "asset_only_revision",
+      "question": "Can an agent replace one 3D model without changing game rules or destroying the previous revision?",
+      "focus": {
+        "assets": "versioned_remote"
+      },
+      "witness": "Two immutable asset hashes, an actual renderer swap, a saved old build, and rollback on the TV.",
+      "status": "proposed"
+    },
+    {
+      "id": "latency_cutoff",
+      "question": "Which network conditions make a streamed world noticeably worse than a locally simulated one?",
+      "focus": {
+        "renderer": "streamed_gpu"
+      },
+      "witness": "Measured input-to-photon latency under controlled network conditions, not synthetic guesses.",
+      "status": "proposed"
+    }
+  ]
+}
