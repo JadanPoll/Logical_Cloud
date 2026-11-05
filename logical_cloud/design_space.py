@@ -43,7 +43,7 @@ def _assignments(values: Any, choices: dict[str, set[str]], label: str) -> dict:
     for factor, option in values.items():
         if factor not in choices:
             raise ModelError(f"{label} uses unknown factor {factor}")
-        if option not in choices[factor]:
+        if not isinstance(option, str) or option not in choices[factor]:
             raise ModelError(f"{label} uses unknown option {factor}={option}")
     return values
 
