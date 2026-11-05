@@ -59,6 +59,32 @@ correctness proof.
 
 This illustration is **not** a required ontology. A camera's permissions also intersect security, privacy, device capabilities, and the application lifecycle. Therefore the real structure is a family of overlapping **sets and relationships**, not a rigid single-parent tree.
 
+## Algebraic design variables (when a question merits them)
+
+The three layers can be supported by **domain-general named factors**,
+rather than only prose or a file-by-file project map. The human's desired
+experience remains the invariant; a renderer, input mode, agent workflow,
+execution location, interface presentation, state strategy, and asset
+delivery can be independently proposed and varied where their contracts
+permit. An implementation does **not** need every factor decided before
+a useful experiment begins.
+
+A factor record answers three questions: *what choice is being made*,
+*why does it matter to the human*, and *what evidence distinguishes the
+options?* Intersections record which combinations require another choice,
+have a known design conflict, or remain research hypotheses. Some factors
+cannot be isolated without changing semantics; explicitly mark that
+boundary rather than claiming perfect algebraic independence.
+
+The [general design-space analyzer](../algebraic-design-spaces.md) is one
+optional executable representation used for consequential decisions, such
+as the Fire TV Compute GUI or an agentic 3D Playroom. It accepts **partial
+assignments**, displays open dependencies, and never promotes a compatible
+design record into a verified runtime or objective aesthetic preference.
+An agent should reveal the smallest relevant subset to the human, not
+ask them to fill out a giant matrix. This extends the existing factorized
+placement model without making it a compulsory global data schema.
+
 ## The smallest useful intent certificate
 
 Keep it short enough that an agent can actually read it:

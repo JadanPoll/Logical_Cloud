@@ -13,6 +13,17 @@ For a specific task:
 
 Never turn these steps into a compulsory report or long checklist for a trivial edit. If they obstruct the user's purpose, apply [LC-13.03](CONSTITUTION.md).
 
+**Cross-domain algebra:** For architecture-scale questions such as "what
+should Compute look like?" or "how could agents build 3D games?", use the
+[domain-general design-space model](docs/algebraic-design-spaces.md):
+keep the person's holistic experience stable, expose a few substitutable
+factors, label genuine cross-factor constraints, and leave unknowns
+unassigned. Compare named partial candidates and propose discriminating
+experiments rather than forcing a completed technology stack. The
+[`design` CLI](logical_cloud/design_space.py) and examples are optional
+tools for consequential decisions, never mandatory paperwork. Do not
+infer objective user preference from a structural compatibility report.
+
 Companion references: [agentic loop](docs/constitution/agentic-loop.md), [acceptance flows](docs/constitution/acceptance.md), and [REM/RSM/FKEN source projection](docs/constitution/sources.md).
 
 ## Autonomous development and integration

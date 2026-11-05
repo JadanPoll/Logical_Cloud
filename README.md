@@ -39,6 +39,31 @@ The simulator is one component of this ambition, not the project itself.
 
 ---
 
+## General design factorization — before the implementation is decided
+
+The same algebra can analyze **any significant software design question**,
+not just where an already-described workload executes. Compute's human
+interface, Playroom's game architecture, a future agentic 3D world,
+portability, or Android Dojo can each be described as a **partial factor
+space** with explicit human intent, replaceable choices, cross-factor
+constraints, open problems, and evidence.
+
+The new standard-library-only [design-space analyzer](
+docs/algebraic-design-spaces.md) makes those questions navigable for
+agents **and** humans, without deciding an entire architecture in advance.
+It is not an automatic architect or simulator of unfinished 3D games.
+
+```bash
+python -m logical_cloud design examples/design_compute_tv.json --variant agent_work
+python -m logical_cloud design examples/design_playroom_3d.json --compare
+python -m logical_cloud design examples/design_playroom_3d.json --variant remote_fidelity --json
+```
+
+Agents can expose just the relevant variable, a competing candidate,
+a missing dependency, and the cheapest informative experiment. A candidate
+whose declared constraints are satisfied is **not** thereby proven to
+work; human goals and preferences remain authoritative.
+
 ## Existing implementation — placement simulator
 
 **Build an application once; factor out where code, data, and computation happen.**

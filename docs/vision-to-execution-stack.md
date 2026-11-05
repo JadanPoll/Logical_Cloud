@@ -76,6 +76,23 @@ README, an intent-set certificate, a source-backed decision, and a concrete
 artifact may be enough. Use machine-readable structures where actual
 coordination and substitution benefit from them, not as paperwork.
 
+### Factorized architecture before the full stack is known
+
+Before choosing an implementation, an agent can treat the person's
+holistic goal as a stable objective and vary **functional design variables**
+such as UI presentation, control modality, game rules, scene representation,
+asset source, agent workflow, executor and state continuity. Constraints
+and interactions are explicit; unknown dimensions remain unknown. This
+also applies to Compute's TV interface and future agentic 3D Playroom,
+not only portability or distributed execution placement.
+
+A first executable [design-space contract](algebraic-design-spaces.md)
+can produce a human-facing summary of relevant choices, unresolved
+dependencies and the next informative test, plus an agent-readable JSON
+record. The contract does not substitute for real code, evidence, or a
+human's value judgments. Avoid a full combinatorial sweep when one
+meaningful factor comparison is sufficient.
+
 ### The crucial non-dependency rule
 
 A's *implementation* need not finish before B starts if B can advance
