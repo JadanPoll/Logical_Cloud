@@ -22,7 +22,7 @@ philosophy or a new product area. In particular:
 
 For a human goal `H`, write:
 
-`Candidate = H × F₁ × F₂ × … × Fₙ | Constraints(F₁, …, Fₙ)`
+`DesignSpace(H) = { x ∈ F₁ × F₂ × … × Fₙ  |  Constraints(x, H) }`
 
 Here `H` denotes **the human's intended experience and invariant
 promises**, not an interchangeable technical module. Each `Fᵢ` is a
