@@ -1,6 +1,6 @@
 # The near-real-time agentic development loop
 
-**Constitutional basis:** LC-01, LC-05 through LC-12. This is a desired workflow and set of decision rules, not a claim that voice-driven remote deployment is already built.
+**Constitutional basis:** LC-01, LC-05 through LC-12, LC-16. This is a desired workflow and set of decision rules, not a claim that voice-driven remote deployment is already built.
 
 ## North-star demonstration
 
@@ -15,6 +15,50 @@ It preserves the existing playback contract; prepares two genuinely different UI
 The build host, runtime device, and artifact storage may be different machines. That is the **substrate's responsibility**, subject to authorization and actual capability, not a repeated instruction burden placed on the user.
 
 **Success is the whole experience:** the utterance reaches an agent, relevant context is recovered, useful alternatives appear, a chosen version can be applied or reverted, and a new agent can later understand what happened without another full interview.
+
+## Human vision and high-level interpretation
+
+The user may supply nothing more than an ambitious, informal vision over
+text or voice. Their central contribution is to express the **big-picture
+and holistic goals**, refine a few consequential preferences, and judge
+useful experiences—not specify the Android, network, source-tree, or test
+mechanics. The agents take responsibility for implementation and routine
+uncertainty (LC-16).
+
+When the vision has materially different plausible meanings, the high-level
+agent offers two or three **contrasting interpretations of the outcome**,
+briefly naming their tradeoffs and proposing an initial default. The user
+can reply "second, but keep the first one's navigation"; the selection
+becomes a named, reversible intent/variant constraint and the agents proceed.
+Do not turn straightforward requests into multiple-choice homework. A
+cheap preview may be more informative than a question.
+
+A representative interaction:
+
+> **Human:** "I want a Wii-like console where I can make and explore apps
+> entirely from my TV or iPad."
+>
+> **High-level agent:** "Do you prefer (A) an app launcher with a separate
+> build workspace, (B) a unified create-and-preview console, or (C) a
+> lightweight launcher that delegates development to remote agents?
+> I can start with C while preserving the path to B."
+>
+> **Human:** "C for now; make it easy to turn into B."
+>
+> **Agents:** Preserve that purpose, factor launcher, agent coordination,
+> build/preview and deployment interfaces, research relevant established
+> implementations, and return an inspectable candidate. A new worker
+> retrieves the concise *why/promise/boundary* for its class of functions,
+> plus source-pinned implementation rationale and evidence, rather than
+> asking the human to repeat this history.
+
+This is an **illustrative desired flow**, not a claim that Logical Cloud
+already implements a voice coordinator or all of these capabilities.
+Outstanding low-level implementation and compositional uncertainty should
+normally remain with the responsible agents. A human decision is requested
+only when it meaningfully changes the vision, preference, or authority.
+Scale agents up or down while keeping the same named intent and sources of
+truth; record variants and decisions, not full conversational transcripts.
 
 ## The operational loop
 
