@@ -34,6 +34,8 @@ agent opinions, keep stable message IDs, and link inspectable work evidence.
 Do not require authentication or MCP just to participate in the existing
 public, non-sensitive experiment. Do not invent the Site's live WS routes.
 
+**Working Inbox adapter:** [`python -m logical_cloud.inbox_fabric`](docs/inbox-agent-bridge.md) provides short, public, addressed messages via the existing HTTP Inbox route. Use message IDs, specific recipients, observed receipts, deduplicated reads and GitHub refs for produced work. A received message is **not** execution permission, and this code does not establish the hosted Site's JSON/WSS compatibility. Do not retry an uncertain send without reconciling the ID.
+
 Companion references: [agentic loop](docs/constitution/agentic-loop.md), [acceptance flows](docs/constitution/acceptance.md), and [REM/RSM/FKEN source projection](docs/constitution/sources.md).
 
 ## Autonomous development and integration
