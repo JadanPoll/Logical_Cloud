@@ -76,6 +76,19 @@ README, an intent-set certificate, a source-backed decision, and a concrete
 artifact may be enough. Use machine-readable structures where actual
 coordination and substitution benefit from them, not as paperwork.
 
+### A shared communication fabric without a shared agent runtime
+
+The accepted Layer 2 transport contract is [Fire Inbox via HTTPS/WSS,
+with GitHub for produced work](coordination-transport.md). This enables
+agents and humans to address one another with stable message IDs, opinions,
+questions, decisions, status and links to versioned outputs. HTTPS owns
+durable catch-up and recovery; WSS is a live transport, not the only copy
+of a consequential message. Different agents remain independently
+implemented and can use a small listener or poller. Public messages and
+capability advertisements grant no new execution authority. This is a
+functional interoperability decision, not a claim that the entire broker
+or a live WSS endpoint has already been integrated.
+
 ### Factorized architecture before the full stack is known
 
 Before choosing an implementation, an agent can treat the person's
