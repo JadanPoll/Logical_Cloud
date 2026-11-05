@@ -197,6 +197,41 @@ placement under its model, not the full human-to-game experience.
 Progress should expose the smallest working links rather than invent
 missing connections or require all layers to be implemented serially.
 
+## N. "Get me VS Code on my TV" — lookup, adaptation and evidence
+
+**Starting point:** The Fire Console supports native apps, browser games,
+and some input diagnostics, but no universal Windows application runtime.
+There is a growing set of actual implementation precedents, research
+questions and independently assessed input/interaction configurations.
+
+**Request:** "Get me VS Code as a Fire TV app. I have only the remote now,
+but I might use my iPad as a companion later."
+
+**Success:** The agent looks up the named program in an evidence-qualified
+portability knowledge base. It treats *execution capability* separately from
+*usable interaction*: an upstream web editor or remote-host candidate does
+not imply good remote-only navigation, nor does a poor D-pad experience
+prove the program itself impossible. It can show a candidate path, known
+limitations, an evidence-backed next experiment, and what remains a research
+problem. Unknown entries generate an *unassessed* research task rather than
+a fabricated "unsupported" verdict. Relevant solutions (e.g. app-local
+pointer translation or iPad keyboard control) can be reused across titles.
+A later real Fire TV observation changes only affected route/control
+claims, and the next agent can recover the decision and evidence without
+reading the full conversation.
+
+**Failure:** Claiming a program is portable because a GitHub source exists;
+equating a runnable GUI with good D-pad usability; asking the human to
+choose ABI, runtime, and build commands; marking an unknown title impossible;
+creating a brand-new global input broker when an app-local/companion path
+suffices; or inventing device-verification evidence from a passing build.
+
+**Evidence boundary:** A seed database, lookup script and JVM/Python tests
+can verify record structure and honest query behavior. They do **not**
+verify a live Windows GUI on Fire OS. [First Fire implementation case](
+../cases/fire-first-slice-2026-11-04.md) tracks this distinction and
+the limited currently implemented slice.
+
 ## The scoreboard should be holistic
 
 Compare candidate architectures on **time from broad vision to first meaningful interpretation or preview**, **time to accepted update**, **number of independently modified authoritative definitions**, **amount of context reacquired**, **number and severity of cross-factor inconsistencies**, **parallel-agent blocking time**, **real user-flow success**, **cost of necessary verification**, **rollback/resumption reliability**, and **ability to recover why the result exists**, **upstream-to-local implementation traceability**, **preference-driven unnecessary rewrites**, and **ability to classify a failed result as rule violation versus rule inadequacy**.
