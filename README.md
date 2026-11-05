@@ -104,6 +104,12 @@ The [CI workflow](.github/workflows/ci.yml) validates simulator invariants and p
 
 See [agent change protocol](docs/agent-change-protocol.md) for why code variants, execution policies, deployments, and rollout approvals need distinct identities. The original unrelated README is preserved at [docs/legacy-original-readme.md](docs/legacy-original-readme.md).
 
+**Current cross-project execution case:** [Fire Console's first Playroom,
+portability lookup, and ungraded Android Dojo slice](docs/cases/fire-first-slice-2026-11-04.md).
+It records actual GitHub source/tool actions and bounded checks while separating
+an agent-queryable route from a real physical-TV result. This is an early
+exercise of the constitution, not a finished orchestration runtime.
+
 ## Next milestones
 
 Prioritize **one end-to-end user-directed development slice** before adding
