@@ -67,6 +67,36 @@ and the canonical Dojo JSON catalog. New work:
   The TV-native UI implements that bounded contract; full distributed
   development and skill-certification are separate, unmet goals (LC-15.04).
 
+## Follow-up: How high and low can Android Dojo go?
+
+The user refined Dojo's most interesting **research boundary**: it should
+invite extremely high-level, script-like solutions as well as native code,
+Android service observation, and lower-level investigation. The difficulty
+or intellectual depth of a challenge is **not** determined by how much
+low-level code it uses.
+
+[Fire PR #17](https://github.com/JadanPoll/fire/pull/17) provides a
+second, optional axis over the canonical Dojo problems: scripted/web,
+application framework, native/JNI, authorized ADB/system diagnostics, and
+kernel/firmware research only. A small JavaScript experiment may expose the
+same scheduling boundary as a C++ routine, and the learner should be able
+to travel between representations without mandatory coursework or grades.
+
+**Concrete falsifying comparisons:** (1) scripted sprite motion versus
+Android Canvas, measured by real frame intervals; (2) a batched versus
+per-call JNI operation; (3) app-visible state versus authorized shell
+diagnostics. Each is a meaningful question with relevant glossary terms,
+partial-progress journal entries, and explicit permissions/capability
+limits. Do not infer that ordinary native code can install drivers or
+change privileged services. This is an experiment taxonomy, not evidence
+that the experiments have been performed or devices are rooted.
+
+**Constitutional relevance:** LC-16.04 (preserve option to change the
+abstraction), LC-02 (separate what is being studied from representation),
+LC-11.01 (proportionate real measurements), LC-15.04 (method versus
+observed learning outcome). No constitutional amendment is presently
+warranted; real device observations may change the chosen next mechanism.
+
 ## Evidence that should be measured
 
 | Claim | Needed witness |
