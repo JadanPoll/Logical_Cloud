@@ -1,0 +1,353 @@
+{
+  "schema_version": 1,
+  "id": "compute-work-from-tv",
+  "intent": {
+    "goal": "Enable a human to accomplish real work from the TV through agents and discoverable physical or virtual computing capabilities, without forcing the human to manage a technical control plane.",
+    "invariants": [
+      "A person chooses work objectives, not tools, shell commands or provider credentials.",
+      "Device discovery is distinct from execution authority and proof of job completion.",
+      "The remote alone should remain a useful, predictable interface; optional iPad input may improve demanding tasks."
+    ]
+  },
+  "factors": [
+    {
+      "id": "surface",
+      "question": "How should work and computing capabilities appear to the human?",
+      "relevance": "A device icon is useful for exploration, but might not be the best surface for accomplishing tasks.",
+      "options": [
+        {
+          "id": "device_gallery",
+          "meaning": "Device-like cards with named capabilities and hardware facts.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "task_board",
+          "meaning": "Goal-oriented work tasks with state, outputs and continuation.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "desktop_remote",
+          "meaning": "A remotely presented desktop-like interface.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "intent_entry",
+      "question": "How does the human express and refine an objective?",
+      "relevance": "Intent capture should not force the user to know the implementation tool.",
+      "options": [
+        {
+          "id": "remote_cards",
+          "meaning": "D-pad navigable options and recent work.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "ipad_text",
+          "meaning": "Companion device supports typing and semantic controls.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "voice_dialogue",
+          "meaning": "Voice-guided intent with editable constraints.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "discovery",
+      "question": "How do devices and agentic providers advertise what they can do?",
+      "relevance": "A capability claim does not establish presence, trust or operation.",
+      "options": [
+        {
+          "id": "bundled",
+          "meaning": "Bundled fixed metadata catalog.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "https_registry",
+          "meaning": "GET-accessible unverified capability metadata registry.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "linked_agents",
+          "meaning": "Provider-native discovery adapters for connected agents.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "execution",
+      "question": "Which device actually performs work?",
+      "relevance": "Different tasks need different privileges, runtime costs and physical resources.",
+      "options": [
+        {
+          "id": "tv_only",
+          "meaning": "An app-owned lightweight local process or stage.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "physical_host",
+          "meaning": "An external computer with its own execution environment.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "virtual_agent",
+          "meaning": "A scoped hosted coding or Python worker.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dispatch",
+      "question": "What happens after choosing a capability?",
+      "relevance": "Showing GitHub Actions or Codex does not mean the workflow can be invoked.",
+      "options": [
+        {
+          "id": "explore_only",
+          "meaning": "Read-only browsing; no invocation path.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "proposal_queue",
+          "meaning": "An agent prepares a reviewable plan and separate execution request.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "scoped_run",
+          "meaning": "A capability-specific runner executes within its permitted authority.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "continuity",
+      "question": "How is unfinished work recovered?",
+      "relevance": "An agentic kernel needs resumability rather than just a command button.",
+      "options": [
+        {
+          "id": "ephemeral",
+          "meaning": "Local one-session status with no cross-device recovery.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "resumable_jobs",
+          "meaning": "Persistent goal, progress events, artifacts and last-known state.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "observability",
+      "question": "What feedback demonstrates actual work?",
+      "relevance": "Agent confidence cannot substitute for observable work or artifacts.",
+      "options": [
+        {
+          "id": "capability_cards",
+          "meaning": "Name, status and offered operations only.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "event_trace",
+          "meaning": "Ordered job events, state and failures.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "artifact_results",
+          "meaning": "Inspectable outputs and reproducible evidence.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "interaction",
+      "question": "How can the user supervise and control a complex job?",
+      "relevance": "The TV remote and companion have different input affordances.",
+      "options": [
+        {
+          "id": "remote_only",
+          "meaning": "D-pad focus, OK and Back with concise action cards.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        },
+        {
+          "id": "companion",
+          "meaning": "Optional iPad or keyboard controller for precise and text-heavy operations.",
+          "maturity": "hypothesis",
+          "evidence": {
+            "kind": "hypothesis"
+          }
+        }
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "browse_only",
+      "purpose": "Inspect virtual GitHub or Codex capabilities without implying real remote work.",
+      "set": {
+        "surface": "device_gallery",
+        "intent_entry": "remote_cards",
+        "discovery": "bundled",
+        "dispatch": "explore_only",
+        "continuity": "ephemeral",
+        "observability": "capability_cards",
+        "interaction": "remote_only"
+      }
+    },
+    {
+      "id": "agent_work",
+      "purpose": "Explore a real, resumable work task with a separate agent execution capability.",
+      "set": {
+        "surface": "task_board",
+        "intent_entry": "ipad_text",
+        "discovery": "linked_agents",
+        "execution": "virtual_agent",
+        "dispatch": "proposal_queue",
+        "continuity": "resumable_jobs",
+        "observability": "event_trace",
+        "interaction": "companion"
+      }
+    },
+    {
+      "id": "desktop_like",
+      "purpose": "Investigate a large-screen desktop experience while keeping control affordances explicit.",
+      "set": {
+        "surface": "desktop_remote",
+        "intent_entry": "ipad_text",
+        "discovery": "https_registry",
+        "execution": "physical_host",
+        "dispatch": "scoped_run",
+        "continuity": "resumable_jobs",
+        "observability": "artifact_results",
+        "interaction": "companion"
+      }
+    }
+  ],
+  "intersections": [
+    {
+      "id": "run_needs_trace",
+      "when": {
+        "dispatch": "scoped_run"
+      },
+      "requires": {
+        "observability": "event_trace"
+      },
+      "strength": "hypothesis",
+      "reason": "Ordered events may be needed to know whether a real task ran, failed or completed; an artifact-only report may or may not suffice."
+    },
+    {
+      "id": "agent_work_persistence",
+      "when": {
+        "dispatch": "proposal_queue"
+      },
+      "requires": {
+        "continuity": "resumable_jobs"
+      },
+      "strength": "design_contract",
+      "reason": "A reviewable agent work objective promises continuation across user sessions."
+    },
+    {
+      "id": "desktop_needs_companion",
+      "when": {
+        "surface": "desktop_remote"
+      },
+      "requires": {
+        "interaction": "companion"
+      },
+      "strength": "hypothesis",
+      "reason": "Desktop-shaped interfaces may be practically unusable with a D-pad alone; test control normalization and actual workflows."
+    }
+  ],
+  "experiments": [
+    {
+      "id": "browse_git_workflow",
+      "question": "Can the TV display GitHub repository storage and Actions offerings without suggesting permission to invoke them?",
+      "focus": {
+        "surface": "device_gallery"
+      },
+      "witness": "TV navigation recording and distinct capability versus authority labels.",
+      "status": "proposed"
+    },
+    {
+      "id": "resumable_real_task",
+      "question": "Can an agent complete a small real coding task, leave an inspectable artifact, and resume after the TV is closed?",
+      "focus": {
+        "continuity": "resumable_jobs"
+      },
+      "witness": "One genuine tool invocation, ordered progress evidence, artifact, and reopening from a cold session.",
+      "status": "proposed"
+    },
+    {
+      "id": "remote_desktop_use",
+      "question": "Which concrete desktop tasks actually benefit from iPad-assisted TV interaction?",
+      "focus": {
+        "surface": "desktop_remote"
+      },
+      "witness": "A realistic task run, input trace, time to completion and comparison to remote-only control.",
+      "status": "proposed"
+    }
+  ]
+}
