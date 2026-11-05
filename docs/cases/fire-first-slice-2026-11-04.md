@@ -69,6 +69,7 @@ python3 -m unittest discover -s tools -p 'test_*.py'
 | Unknown software is not silently called incompatible | Source logic and unit test | **Supported:** targeted CI passed |
 | Dojo partial notes survive a program restart | Source logic and unit test | **Supported:** targeted CI passed |
 | Native minigames compile | GitHub Actions `:app:testReleaseUnitTest` and `:app:assembleRelease` | **Supported:** [CI run 41978298874](https://github.com/JadanPoll/fire/actions/runs/41978298874) passed |
+| Release APK was built and published | Main GitHub Actions build and publish workflow | **Supported:** [run 41978490690](https://github.com/JadanPoll/fire/actions/runs/41978490690) |
 | Fire remote successfully plays the games | Physical Fire TV observation | **Undetermined** |
 | Game assets can be independently refreshed from GitHub | No implementation yet | **Not established** |
 | Full human→agent→device→revision loop is operational | No complete run | **Not established** |
@@ -84,7 +85,7 @@ incompatible. The scoped correction permits synonyms within an entry while
 still rejecting ambiguous names across distinct entries. The following
 [run 41978298874](https://github.com/JadanPoll/fire/actions/runs/41978298874)
 passed static contracts, Python unit tests, the app's JVM unit tests and
-Android release assembly. No device test was performed.
+Android release assembly. The subsequent [main build-and-publish run 41978490690](https://github.com/JadanPoll/fire/actions/runs/41978490690) also passed and published the rolling lab APK. No physical Fire TV test was performed.
 
 **LC-15 classification:** a narrow implementation-rule bug was found and
 repaired, with prior failed evidence preserved. **No LC constitutional
