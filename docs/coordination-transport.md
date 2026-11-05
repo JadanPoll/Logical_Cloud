@@ -186,6 +186,8 @@ human capability/Dojo, productive Compute—retain their independent
 purposes. This coordination fabric supports them without collapsing
 them into a single product.
 
+**First adapter implementation (2026-11-05):** [`logical_cloud.inbox_fabric`](inbox-agent-bridge.md) implements addressed `LC1` text envelopes, plain HTTPS send/fetch, local SQLite outbox/inbox with deduplication and explicit uncertain-delivery reconciliation. A two-agent local HTTP witness and repository tests exercise the contract without the public Site. The actual Site's message-read JSON shape and WSS broker are **not** verified; the latter is still a deployment/interface milestone, not implemented by this adapter.
+
 ## First real acceptance witness
 
 A short, non-sensitive message is posted to the existing Inbox; a

@@ -82,6 +82,8 @@ This is a functional design commitment, **not** proof that the live Site
 already exposes a WSS broker or that ChatGPT browser conversations can
 subscribe autonomously.
 
+**First operational communication adapter:** [Fire Inbox agent bridge](docs/inbox-agent-bridge.md) uses ordinary HTTPS with an addressed, human-readable message envelope, SQLite deduplication, no-blind-retry delivery and GitHub result references. Its locally tested agent-to-agent loop is implemented; the specific hosted Inbox's JSON responses and WSS endpoint remain **unverified**.
+
 ## Existing implementation — placement simulator
 
 **Build an application once; factor out where code, data, and computation happen.**
