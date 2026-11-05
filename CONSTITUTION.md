@@ -8,6 +8,8 @@
 
 **Our asymptotic goal is software change at the speed of intention.** A person speaks into a phone; an agent running on an available compute machine interprets the request against a recoverable project intent; independently modifies the relevant factors; explores alternatives; and returns a working, inspectable result for a chosen device or form factor. The user need not manage where the source, build, code artifacts, or expensive computation reside.
 
+**The human's primary contribution is vision, not implementation management.** People should be able to communicate big-picture and holistic goals comfortably in text or voice, choose among a few high-level interpretations when this genuinely matters, and change their minds without becoming project integrators. Agents own ordinary engineering, modular iteration, and research-quality continuity so additional agents can join or depart without making the person reconstruct the project. See LC-16.
+
 The project is about **agentic software architecture and the development process**. Location-independent code and execution are among its applications, not the whole thesis. This constitution samples relevant ideas from REM, RSM, and FKEN without copying their full research machinery into every software project.
 
 The articles below are *operational principles*, not a ceremonial checklist. Invoke a principle when it addresses a real difficulty. Explain departures when they materially affect the goal.
