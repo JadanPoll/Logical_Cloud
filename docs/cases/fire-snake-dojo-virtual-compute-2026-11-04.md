@@ -99,6 +99,45 @@ warranted; real device observations may change the chosen next mechanism.
 
 **Recorded integration evidence:** The follow-up [Fire PR #17](https://github.com/JadanPoll/fire/pull/17) for the stack navigation and cross-level challenge catalog merged successfully. Its [scoped CI](https://github.com/JadanPoll/fire/actions/runs/41984866284) and [main build-and-publish workflow](https://github.com/JadanPoll/fire/actions/runs/41985021435) both passed. These results do not establish actual learning outcomes, on-device usability, or privileged Android access.
 
+## Follow-up: algebraic portability and the human possibility loop
+
+[Fire PR #18](https://github.com/JadanPoll/fire/pull/18) merged the
+first practical cross-family links and passed [targeted CI](
+https://github.com/JadanPoll/fire/actions/runs/41991343157).
+
+**Critical correction:** Portability is not a yes/no property of a
+Windows executable or a named application. It is a constrained *factor
+substitution problem* inherited from the [Logical Cloud algebra](
+../architecture.md): the desired application experience is held fixed
+while the implementation, placement, presentation, controls, artifacts,
+state and transport are varied when appropriate. The [Fire factor model](
+https://github.com/JadanPoll/fire/blob/main/docs/PORTABILITY_FACTOR_SPACE.md)
+explicitly records these variables and distinguishes hypothesis from
+physical-device evidence. The first working CLI varies only
+`execution route × control`, e.g. VS Code Web via D-pad versus the
+same editor with an iPad companion; the rest of the factor space remains
+a navigational research direction, not an implemented solver.
+
+**Layer 2 purposes are explicitly independent:**
+A is present-day fun through changeable games (Snake has an explicit
+versioned style loader, verified hash, cache and rollback);
+B is the REA-style long-horizon feasibility frontier (a TV matrix browser
+and unknown-title research queue);
+C is **human cognitive improvement**, measured by richer questions,
+intuition and ideas rather than completed exercises (a Dojo Idea Garden
+stores human-generated possibilities and copies questions for agents);
+D is a future **agentic computing kernel** for real work (the device
+gallery can now optionally inspect read-only HTTPS registry metadata).
+None of these completed slices demonstrates the full independent outcome,
+nor do they prove physical Fire TV usability or full remote execution.
+
+**Constitutional lesson:** Clarifying an algebraic parent contract made
+the implementation more precise without introducing mandatory machinery
+or changing the Playroom's user-facing purpose (LC-02, LC-08, LC-16–17).
+An agent should be able to recover this factor interpretation on its next
+portability investigation and ask which *single variable* a proposed
+experiment actually changes.
+
 ## Evidence that should be measured
 
 | Claim | Needed witness |
@@ -110,7 +149,7 @@ warranted; real device observations may change the chosen next mechanism.
 | GitHub is discoverable as a virtual capability provider | JSON catalog / gallery |
 | Any device can announce metadata through GET | Local HTTP test with actual request and returned JSON |
 | Announcement triggers a GitHub Action or a device command | **Not implemented or claimed** |
-| TV loads remote dynamic announcements | **Not implemented or claimed** |
+| TV loads remote dynamic announcements | New explicit HTTPS read-only fetch is implemented in source; **physical-TV operation and real endpoint remain unverified** |
 | Entire agentic cloud works end to end | **Not implemented or claimed** |
 
 An agent should update this case with real CI outcomes and independent device
