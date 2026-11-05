@@ -1,14 +1,45 @@
 # Logical Cloud
 
-**The long-term project is an architecture for near-real-time, factorized, multi-agent software development—not only remote execution.** Start with the [Constitution](CONSTITUTION.md) and its [agent entrypoint](AGENTS.md): voice-driven modification, independently substitutable UI style / localization / form factors, concise hierarchies of intent, parallel agents, self-play experiments, and device-independent compute are the guiding problems.
+**Logical Cloud is the executable software-and-engineering realization of the
+general ideas explored in REM, RSM and FKEN.** The Navigationals material
+develops philosophies about identifying holistic goals, routing among
+reasoning operations, recovering knowledge, and avoiding locally brilliant
+but globally unhelpful work. Logical Cloud asks the next question:
+**what should the actual human/agent interface, functional contracts,
+agent-to-agent coordination, coding process, tools, runtime, evidence and
+revision machinery look like so those ideas work in real software projects?**
 
-The new constitutional additions include a [numbered axiom calculus](docs/constitution/axiom-calculus.md) for inspecting whether agents followed material rules and whether the rules actually worked, and [research-paper-style source provenance](docs/constitution/provenance.md) linking intent sets to examined implementations, local adaptations, and verification evidence.
+The end-to-end aspiration is **software development at the speed of human
+intention**: a person communicates a big-picture idea in text or voice;
+a high-level agent turns it into intelligible sub-goals and meaningful
+choices; specialist agents use modular contracts and inspected precedents;
+actual code and tools produce early inspectable candidates; and the person
+can revise one preference, keep the project, or recruit another agent
+without reconstructing the engineering.
 
-The existing distributed-execution simulator remains an early exploratory component, not the definition of the whole system.
+**Three human-facing levels:** (1) general/holistic idea; (2) revisable
+functional intent organized as sets and supersets; (3) actual
+implementation decisions, code, source-grounded references and evidence.
+A human can ask "why A instead of B?" at any level without needing
+to administer the technical workflow.
+
+Start with the [full vision-to-execution stack](docs/vision-to-execution-stack.md),
+[Constitution](CONSTITUTION.md), [intent-set doctrine](docs/constitution/intent-sets.md),
+and [agent entrypoint](AGENTS.md). The constitution's
+[numbered axiom calculus](docs/constitution/axiom-calculus.md) distinguishes
+rule compliance from outcome success, and its
+[research-style provenance](docs/constitution/provenance.md) links
+decisions to actual inspected implementations.
+
+**Current implementation status:** This repository implements a
+deterministic distributed-execution simulator, CLI, tests and offline
+comparison reports. The full voice/text-to-agent-to-code/tool/runtime
+development loop is a *specified objective*, not an existing feature.
+The simulator is one component of this ambition, not the project itself.
 
 ---
 
-# Logical Cloud
+## Existing implementation — placement simulator
 
 **Build an application once; factor out where code, data, and computation happen.**
 
