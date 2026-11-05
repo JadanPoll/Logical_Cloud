@@ -64,6 +64,24 @@ a missing dependency, and the cheapest informative experiment. A candidate
 whose declared constraints are satisfied is **not** thereby proven to
 work; human goals and preferences remain authoritative.
 
+## Coordination decision — Fire Inbox + GitHub
+
+The selected Layer 2 communication interface is **ordinary HTTPS** for
+persistent messages, recovery and capability metadata, with **WSS** as the
+live bidirectional route when available. The existing [Fire Inbox](
+https://fire-inbox-jadan.brinyduck2.chatgpt.site/) is the preferred
+human-facing message hub. **GitHub** manages actual produced work:
+repositories, source/asset versions, Actions builds, release artifacts and
+provenance. Agents can address one another through small message envelopes
+and independent adapters without needing a universal MCP gateway.
+
+Read the [coordination and artifact-plane contract](
+docs/coordination-transport.md) for message semantics, human decision
+ownership, reconnect/recovery behavior and the real acceptance flow.
+This is a functional design commitment, **not** proof that the live Site
+already exposes a WSS broker or that ChatGPT browser conversations can
+subscribe autonomously.
+
 ## Existing implementation — placement simulator
 
 **Build an application once; factor out where code, data, and computation happen.**
