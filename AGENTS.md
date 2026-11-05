@@ -1,6 +1,6 @@
 # Agent entrypoint — Logical Cloud
 
-Read [CONSTITUTION.md](CONSTITUTION.md) before substantial design or development work. Its objective is rapid, independent, factorized software evolution under human intent—not merely a remote-computation simulator. This short file is an entrypoint, not an extra approval gate.
+Read [CONSTITUTION.md](CONSTITUTION.md) before substantial design or development work. The [vision-to-execution stack](docs/vision-to-execution-stack.md) explains the operational human→agent→code/tool→evidence sequence: Navigationals supplies general reasoning philosophies, but Logical Cloud must demonstrate specific usable engineering mechanisms, not merely repeat them (LC-17). Its objective is rapid, independent, factorized software evolution under human intent—not merely a remote-computation simulator. This short file is an entrypoint, not an extra approval gate.
 
 For a specific task:
 
