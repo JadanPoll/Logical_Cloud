@@ -2,6 +2,25 @@
 
 This is a **selective synthesis**, not an attempt to import three entire research systems as software requirements. These documents belong to the separate [Learning_Visualizations_Taxonomy / Navigationals](https://github.com/JadanPoll/Learning_Visualizations_Taxonomy/tree/main/Navigationals) project. Their original context, uncertainty, and constraints should be preserved.
 
+## Philosophical map versus executable engineering specification
+
+The Navigationals repo is the upstream **collation, development and
+navigation of general principles**. Logical Cloud is the **specific
+software-development design**: how the person expresses intent, how a
+high-level agent develops options and function sets, how other agents
+recover and question research-grounded decisions, how code and tool
+calls actually execute, how evidence is obtained and how revisions
+persist. The operational map is
+[vision-to-execution stack](../vision-to-execution-stack.md) and its
+governing obligations are in [LC-17](../../CONSTITUTION.md).
+
+Every such capability must move beyond a philosophical label to a
+discoverable input, promise, authority boundary, working artifact or
+honestly unimplemented interface, observable witness and repair path.
+This does **not** mean creating seven services up front or requiring
+them to run in a serial pipeline. Only build a new factor when a real
+user flow benefits.
+
 ## REM — the Richer Engineering Method
 
 [Source](https://github.com/JadanPoll/Learning_Visualizations_Taxonomy/blob/main/Navigationals/The_Richer_Engineering_Method.md)
