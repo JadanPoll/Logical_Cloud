@@ -104,6 +104,32 @@ interpretations and the underlying intent certificates with selective,
 version-pinned research references. It should not need a complete transcript
 of the conversation or another interview with the person. See LC-16.07–16.10.
 
+## Three levels a person can navigate
+
+Treat high-level communication as three linked explanations, not one technical
+document:
+
+1. **General idea** (README introduction): what is this system for, and
+   what experience should it create?
+2. **Functional intent** (sets and supersets of related functions): what
+   promises does each capability make, how does it serve the general idea,
+   and which reasonable A/B alternatives remain open?
+3. **Implementation and evidence** (research-style record): which actual
+   implementation was chosen, why, what version-pinned implementations
+   informed it, and what has or has not been tested?
+
+A person can navigate in either direction, including with the question
+"why A rather than B?" Explain the goal-level tradeoff first; reveal
+the code, cited precedents and evidence if needed. An implementation
+change should not silently rewrite a stable functional promise or the
+README-level goal. A changed functional goal should identify only the
+affected implementations and intersecting sets.
+
+Use the minimum documentation and detail needed to make the reasoning
+recoverable by the next agent. Do not require the human to inspect any
+technical layer to make a high-level choice. See LC-16.11–16.14 and the
+[intent-set doctrine](intent-sets.md).
+
 ## The operational loop
 
 **1. Orient.** Interpret the question; identify larger intent and constraints. A short correction to an existing request should reuse its unresolved scope rather than begin a new project description.
