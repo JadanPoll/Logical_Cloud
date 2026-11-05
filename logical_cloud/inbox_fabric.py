@@ -229,6 +229,19 @@ class AgentLedger:
                             ("confirmed" if confirmed else "unknown", message_id))
         return "confirmed" if confirmed else "unknown"
 
+    def reconcile(self, messages: list[dict]) -> list[str]:
+        """Confirm uncertain sends found in durable Site history, no new request."""
+        seen = {m["id"]: m for m in messages}
+        confirmed = []
+        with self.db:
+            rows = self.db.execute(
+                "SELECT id,body FROM outbound WHERE status IN ('attempting','unknown')").fetchall()
+            for mid, body in rows:
+                if seen.get(mid) == json.loads(body):
+                    self.db.execute("UPDATE outbound SET status='confirmed' WHERE id=?", (mid,))
+                    confirmed.append(mid)
+        return confirmed
+
     def collect(self, messages: list[dict], recipient: str) -> int:
         validate_participant(recipient)
         inserted = 0
@@ -271,6 +284,7 @@ def main(argv=None):
     watch.add_argument("--as", dest="recipient", required=True)
     watch.add_argument("--interval", type=float, default=10)
     sub.add_parser("status")
+    sub.add_parser("reconcile", help="confirm uncertain sends from durable Inbox history; no retry")
     args = parser.parse_args(argv)
     db = AgentLedger(args.db)
     site = SiteClient(args.site)
@@ -289,6 +303,9 @@ def main(argv=None):
                 return 3
         elif args.command == "status":
             print(json.dumps(db.sent(), indent=2))
+        elif args.command == "reconcile":
+            ids = db.reconcile(site.fetch())
+            print(json.dumps({"confirmed": ids, "remaining": db.sent()}, indent=2))
         else:
             validate_participant(args.recipient)
             if args.command == "listen" and args.interval < 2:
