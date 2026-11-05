@@ -137,6 +137,31 @@ but do not by themselves prove that an implementation or on-device user
 experience works. Escalate genuine preference/authority questions, not
 routine technical uncertainty.
 
+## L. Navigate general intent, functional choices, and implementation evidence
+
+**Starting point:** A person describes a broad interactive-computing vision.
+Several agents have implemented separate capabilities.
+
+**Request:** "Remind me of the big idea. What is remote-input supposed to
+do? Why use shared normalization instead of letting each game handle input?
+Could we switch for this one application?"
+
+**Success:** The agent gives a short human-readable purpose first, then the
+relevant set/superset promises and a goal-based comparison of two designs.
+If asked, it opens the actual code and selective version-pinned references,
+distinguishing prior implementations from locally verified behavior. The
+person can change one functional choice without rewriting the vision or
+resetting independent work. A new agent reconstructs the reason without
+asking the person to repeat the conversation.
+
+**Failure:** The explanation starts with unrelated code; "we use A because
+the code uses A"; source references are invented; functional intent is
+mistaken for proven runtime behavior; a local alternative erases the shared
+goal or previous evidence.
+
+**Evidence boundary:** This is a prospective acceptance test. Documentation
+alone does not establish that this interaction is implemented.
+
 ## The scoreboard should be holistic
 
 Compare candidate architectures on **time from broad vision to first meaningful interpretation or preview**, **time to accepted update**, **number of independently modified authoritative definitions**, **amount of context reacquired**, **number and severity of cross-factor inconsistencies**, **parallel-agent blocking time**, **real user-flow success**, **cost of necessary verification**, **rollback/resumption reliability**, and **ability to recover why the result exists**, **upstream-to-local implementation traceability**, **preference-driven unnecessary rewrites**, and **ability to classify a failed result as rule violation versus rule inadequacy**.
