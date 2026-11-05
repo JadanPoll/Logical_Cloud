@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 
 from .experiments import compare
+from .design_space import load_design, resolve_design, compare_design, human_summary
 from .model import ModelError, load, set_factor, validate
 from .simulation import simulate
 
@@ -32,8 +33,47 @@ def main(argv: list[str] | None = None) -> int:
     comp.add_argument('--trace', action='store_true')
     comp.add_argument('--output', help='full machine-readable JSON results')
     comp.add_argument('--html', help='standalone comparison dashboard with timeline')
+    design = commands.add_parser('design',
+        help='inspect a human-facing algebraic design space, without running code')
+    design.add_argument('scenario', help='domain-independent factor design JSON')
+    design.add_argument('--variant', help='named partial candidate assignment')
+    design.add_argument('--set', dest='design_settings', action='append', default=[],
+                        metavar='FACTOR=OPTION',
+                        help='override one named design factor, not an executable expression')
+    design.add_argument('--compare', action='store_true',
+                        help='inspect explicitly named candidates (not full Cartesian product)')
+    design.add_argument('--json', action='store_true',
+                        help='emit evidence-qualified report for other agents')
+    design.add_argument('--output', help='write machine-readable report to file')
     opts = parser.parse_args(argv)
     try:
+        if opts.command == 'design':
+            design_doc = load_design(opts.scenario)
+            if opts.compare and (opts.variant or opts.design_settings):
+                raise ModelError('--compare cannot combine with --variant or --set')
+            if opts.compare:
+                reports = compare_design(design_doc)
+            else:
+                overrides = {}
+                for assignment in opts.design_settings:
+                    if '=' not in assignment:
+                        raise ModelError('--set requires FACTOR=OPTION')
+                    factor, option = assignment.split('=', 1)
+                    if factor in overrides:
+                        raise ModelError(f'duplicate factor override {factor}')
+                    overrides[factor] = option
+                reports = resolve_design(design_doc, variant_id=opts.variant,
+                                         overrides=overrides)
+            if opts.output or opts.json:
+                _dump(reports, opts.output)
+            elif isinstance(reports, list):
+                for i, item in enumerate(reports):
+                    if i:
+                        print('\n' + '-' * 36 + '\n')
+                    print(human_summary(item))
+            else:
+                print(human_summary(reports))
+            return 0
         scenario = load(opts.scenario)
         if opts.command == 'simulate':
             for setting in opts.settings:
