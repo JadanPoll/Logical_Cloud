@@ -106,8 +106,29 @@ See [agent change protocol](docs/agent-change-protocol.md) for why code variants
 
 ## Next milestones
 
-1. **Calibrate simulation** against measured device throughput, artifact loading, cache hit rates, network links, and startup costs; model real request distributions and failure modes.
-2. **Minimal real executor:** a trusted local runner using a typed stage interface plus an ordered, resumable execution-result stream. Add a remote runner only after authority/capability boundaries and content-address verification are in place.
-3. **Agent experiments:** reproducible A/B report artifacts, correctness contracts, version identities, canary/shadow traffic, and promotion/rollback policies. Later: a natural-language/voice frontend, not coupled to the core runtime.
+Prioritize **one end-to-end user-directed development slice** before adding
+new general-purpose orchestration machinery. Each milestone is an observable
+acceptance flow, not merely a document:
 
-Do not conflate simulating remote execution with having implemented it.
+1. **Human vision → interpreted and revisable intent:** a text/voice
+   request yields a concise holistic goal, critical sub-goals, a small
+   set of meaningful alternative experiences when warranted, and an
+   editable selected interpretation that persists into the next request.
+2. **Intent → real agent/tool action → useful preview:** an agent
+   navigates the relevant factor and inspected source precedents, makes
+   a scoped code change with an existing tool, checks the cheapest
+   realistic user flow, and returns an inspectable artifact with honest
+   evidence and a clear revision path.
+3. **Continuation and independent agents:** another agent can recover
+   accepted intent, variants, code, reasons and evidence without
+   re-interviewing the human; independent work need not wait for
+   unrelated implementation details.
+4. **Placement and distributed runtime:** calibrate the existing simulator
+   against real traces, implement a trusted local executor with resumable
+   events, then selectively test moving a compatible worker to another
+   device while preserving the functional contract.
+
+See the [vision-to-execution stack](docs/vision-to-execution-stack.md)
+for the full contract and [acceptance cases](docs/constitution/acceptance.md)
+for the success/failure criteria. Do not confuse specifying a capability
+with having implemented it.
