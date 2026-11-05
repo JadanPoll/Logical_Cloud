@@ -1,12 +1,47 @@
 # Intent sets: a navigable hierarchy of promises
 
-**Constitutional basis:** LC-01, LC-02, LC-03, LC-04, LC-07. This describes how an agent should *understand* a project; it does not prescribe a file format, framework, or fixed implementation.
+**Constitutional basis:** LC-01, LC-02, LC-03, LC-04, LC-07, LC-14, LC-16. This describes how an agent should *understand* a project; it does not prescribe a file format, framework, or fixed implementation.
 
 ## Why a “set hierarchy”?
 
 A contemporary agent often spends more effort reconstructing an application's implicit agreement with itself than making the change requested. A developer adds a new locale or adjusts an overlay and must inspect every screen to avoid inconsistent copies of the same design choice. Documentation that mirrors file-by-file implementation does not solve this; it merely creates a second codebase to synchronize.
 
 Instead, let a group of related functions have a **brief certificate of intent**. Superset certificates explain what the family is for; child certificates specialize its promises. The result behaves like a navigational index of reusable obligations, not a prose code listing.
+
+## Three linked intent and evidence layers
+
+The human-facing explanation and the agent's research record are **not one
+giant technical specification**. A useful project offers three navigable
+levels, each authoritative about a different kind of claim (LC-16.11–16.14):
+
+| Layer | Human's question | What remains stable | What may be revised |
+| --- | --- | --- | --- |
+| **General intent** | "What's the big idea, and why should I care?" | A compact README-like description of the holistic purpose, desired experience, and non-negotiable aspirations | The person's actual ambition, interpretation, or product direction |
+| **Functional intent** | "What should this family of functions do, and why A rather than B?" | Named, overlapping function sets/supersets with purpose, observable promises, boundaries and accepted choices | A capability's behavior, its alternatives, parent-child/intersection obligations |
+| **Implementation and evidence** | "How is it done? Why this design? What has actually been demonstrated?" | Discoverable source, decision annotations, examined/version-pinned precedents, local adaptations, and bounded tests | Code, algorithms, runtime placement, supporting references, implementation variants |
+
+The high-level agent starts with a small general description and the few
+critical functional sub-big-pictures. A person can ask "why is input
+normalization shared rather than implemented separately by each game?"
+The agent should explain the **functional** reason first—consistent actions
+without duplicated handling—and then, on request, cite the actually
+inspected implementation and any relevant alternative. A human can reject
+the functional choice without knowing which Java class currently owns it.
+
+The levels are **bidirectionally traversable**, not a strict waterfall.
+A change to an implementation need not rewrite the purpose; a user-changing
+functional promise should reveal which implementations and intersections it
+affects. An implementation failure can provoke a higher-level question
+when the failure genuinely challenges the intended contract. Keep
+supersets and overlaps when concerns have multiple parents. Prefer
+short pointers between authoritative locations to duplicating descriptions.
+
+There is no mandatory separate file, schema or knowledge database for every
+function. A README introduction, a small intent certificate and a few
+source-anchored annotations are enough when they make an actual choice
+recoverable. "Intent accepted" and "implementation verified" must remain
+distinct states; a cited prior implementation is provenance, not a local
+correctness proof.
 
 ## One practical shape
 
