@@ -20,7 +20,7 @@ def _dump(obj: object, filename: str | None = None) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog='logical-cloud', description='Simulate factorized split applications')
+    parser = argparse.ArgumentParser(prog='logical-cloud', description='Analyze factorized designs or simulate distributed execution')
     commands = parser.add_subparsers(dest='command', required=True)
     sim = commands.add_parser('simulate', help='simulate one resolved case')
     sim.add_argument('scenario')
