@@ -60,6 +60,50 @@ only when it meaningfully changes the vision, preference, or authority.
 Scale agents up or down while keeping the same named intent and sources of
 truth; record variants and decisions, not full conversational transcripts.
 
+## Recursive vision clarification: the high-level agent's main job
+
+Before delegating into file-level tasks, identify (1) the **holistic reason**
+the person wants this system and (2) the few **critical sub-big-pictures**
+that together make that ambition meaningful. For each sub-goal, separate
+the person's expressed intention from the agent's provisional interpretation.
+If an important outcome is ambiguous, offer two or three clear, contrasting
+*experiences* the person could mean, with an optional recommendation and
+"none of these / here's what I meant" as a normal response. The human can
+select or mix interpretations in one phrase.
+
+Clarification is **recursive but conditional**: descend into a sub-question
+only if a choice there would substantially change the final experience,
+priority or authorization. Otherwise agents select reasonable reversible
+implementations, present working previews, and iterate. Never recursively
+expand an entire hypothetical decision tree just to demonstrate diligence.
+
+Then return a compact **shared understanding**: "Here is the holistic goal
+I understood; here are its critical sub-goals; here is what I take each to
+mean; here is the sensible path; here is what the first and eventual result
+should feel like." Invite a short correction, not formal sign-off. The
+initial milestone is that the human **recognizes their vague idea as
+faithfully specified**, not that they understand the engineering or that
+implementation is already complete. A clearly understood vision and an
+actually verified result are distinct kinds of evidence.
+
+Example: the person imagines an open-ended Fire TV console, where they can
+play ambitious games, ask for persistent playable prototypes that family
+members enjoy, investigate low-level Android behavior, and treat offshore
+Compute as an extension of the TV. The high-level agent should recognize
+**play**, **imagine/create/iterate**, **inspect/learn**, and **compute
+elsewhere** as related but substitutable sub-big-pictures. It might offer
+different interpretations of "ambitious games" (play existing games, build
+original ones, or both) without asking the person to choose between Gradle,
+Godot or Android's input APIs. It should leave unresolved options open,
+propose an intelligible first end-to-end experience, and own the technical
+work after alignment. This is an example of the intended method, not a
+claim of implemented autonomous game creation.
+
+A new agent should recover this concise decomposition, selected/rejected
+interpretations and the underlying intent certificates with selective,
+version-pinned research references. It should not need a complete transcript
+of the conversation or another interview with the person. See LC-16.07–16.10.
+
 ## The operational loop
 
 **1. Orient.** Interpret the question; identify larger intent and constraints. A short correction to an existing request should reuse its unresolved scope rather than begin a new project description.
