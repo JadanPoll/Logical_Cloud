@@ -97,6 +97,8 @@ LC-11.01 (proportionate real measurements), LC-15.04 (method versus
 observed learning outcome). No constitutional amendment is presently
 warranted; real device observations may change the chosen next mechanism.
 
+**Recorded integration evidence:** The follow-up [Fire PR #17](https://github.com/JadanPoll/fire/pull/17) for the stack navigation and cross-level challenge catalog merged successfully. Its [scoped CI](https://github.com/JadanPoll/fire/actions/runs/41984866284) and [main build-and-publish workflow](https://github.com/JadanPoll/fire/actions/runs/41985021435) both passed. These results do not establish actual learning outcomes, on-device usability, or privileged Android access.
+
 ## Evidence that should be measured
 
 | Claim | Needed witness |
