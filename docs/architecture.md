@@ -1,5 +1,13 @@
 # Logical Cloud architecture — factor the problem before distributing it
 
+**Scope:** This document specifies the execution/fabric factors of
+Logical Cloud, not the whole project. The broader architecture begins
+with a person's holistic vision and functional intent, and continues
+through research-grounded decisions, agent delegation, real code/tool
+work, evidence and revision. See the
+[human-to-execution stack](vision-to-execution-stack.md). The placement
+simulator is an existing executable *slice* of that stack.
+
 ## Desired developer experience
 
 An application says **what** should happen. The substrate decides **where and when**, within declared cost, capability, quality, privacy, and latency constraints. A local widget and a remote widget present the same logical interface. The system exposes observable execution telemetry, not a maze of configuration tasks.
