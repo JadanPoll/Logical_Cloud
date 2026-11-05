@@ -1,6 +1,6 @@
 # Fire Console first implementation case — 2026-11-04
 
-This is an **observed agent/tool workflow in progress**, not a claim that the full
+This is an **observed and source-integrated agent/tool workflow**, not a claim that the full
 Logical Cloud runtime has been built. It challenges the constitution against a
 real user-directed task, rather than writing another architectural diagram.
 
@@ -37,7 +37,7 @@ engine framework. It preserves the existing GBA and pinned web game routes.
 
 ## Actual agent/tool links
 
-[Fire PR #15](https://github.com/JadanPoll/fire/pull/15) contains:
+[Merged Fire PR #15](https://github.com/JadanPoll/fire/pull/15) ([integrated commit `3605b6dd`](https://github.com/JadanPoll/fire/commit/3605b6dd9af554204dd958407e2d071fccf91b13)) contains:
 1. **Intent to code:** two minimal native game probes (Collect and Dodge)
    reachable from Playroom, with pure Java model tests.
 2. **Agent-readable knowledge:** a machine-readable portability seed and
@@ -66,12 +66,32 @@ python3 -m unittest discover -s tools -p 'test_*.py'
 | --- | --- | --- |
 | The user-selected Layer 2 can be expressed as independent, navigable factors | Human-accepted intent, Fire vision revision | Supported as intent only |
 | Agents made actual Fire source/tool changes | Inspectable PR diff and commit history | Supported |
-| Unknown software is not silently called incompatible | Source logic and unit test | Code present; test result pending or check CI |
-| Dojo partial notes survive a program restart | Source logic and unit test | Code present; test result pending or check CI |
-| Native minigames compile | GitHub Actions selected Android tasks | Pending until CI result is recorded |
+| Unknown software is not silently called incompatible | Source logic and unit test | **Supported:** targeted CI passed |
+| Dojo partial notes survive a program restart | Source logic and unit test | **Supported:** targeted CI passed |
+| Native minigames compile | GitHub Actions `:app:testReleaseUnitTest` and `:app:assembleRelease` | **Supported:** [CI run 41978298874](https://github.com/JadanPoll/fire/actions/runs/41978298874) passed |
 | Fire remote successfully plays the games | Physical Fire TV observation | **Undetermined** |
 | Game assets can be independently refreshed from GitHub | No implementation yet | **Not established** |
 | Full human→agent→device→revision loop is operational | No complete run | **Not established** |
+
+## A real failed test and its classification
+
+The first [CI run 41978080951](https://github.com/JadanPoll/fire/actions/runs/41978080951)
+failed *before* Android compilation. The portability index validator treated
+the canonical ID `vscode` and an alias `vscode` **within the same record** as
+conflicting identities. This was a local *implementation/schema error*, not
+a counterexample to the user's portability goal or evidence that Android is
+incompatible. The scoped correction permits synonyms within an entry while
+still rejecting ambiguous names across distinct entries. The following
+[run 41978298874](https://github.com/JadanPoll/fire/actions/runs/41978298874)
+passed static contracts, Python unit tests, the app's JVM unit tests and
+Android release assembly. No device test was performed.
+
+**LC-15 classification:** a narrow implementation-rule bug was found and
+repaired, with prior failed evidence preserved. **No LC constitutional
+amendment is justified**: the governing precedent/evidence/intent obligations
+did not require misinterpreting aliases. A much more consequential remaining
+unknown is how an agent translates a route candidate into a *usable* real TV
+experience. That remains an acceptance experiment, not a solved feature.
 
 ## Constitution pressure test
 
