@@ -100,9 +100,46 @@ These cases are **requirements for future systems**, not statements about curren
 
 **Failure:** unexplained unpinned URLs, no relation between source and the local code, heavy reconstructive context gathering, or defaulting to a new solution before checking the one already used.
 
+## K. Human gives the vision; agents manage interpretation, scale and continuity
+
+**Starting point:** a person has only text or voice access, has a broad ambition
+for a multi-device software environment, and does not want to learn the
+project's implementation structure to direct work.
+
+**Request:** "I want a Wii-like console for trying apps, developing new ones,
+and jumping between the TV and iPad. Use other agents when useful."
+
+**What success looks like:** A high-level agent recovers the likely holistic
+goal and offers a small number of genuinely different outcome-level
+interpretations only where useful, with an intelligible default. The person
+can say "C now, maybe B later" and agents translate that into factored,
+reversible work. They handle routine architecture, citations, implementation,
+tests, and integration without repeatedly interrupting the user. Each
+consequential family of functions has a compact implementation-independent
+purpose/promise/boundary and selectively cited version-pinned code
+precedents, local changes and evidence, so another agent can join, take
+over, or leave without repeated interviews or whole-repository study.
+A subsequent "Actually make the TV UI more playful, not the backend"
+changes the relevant factor without resetting unrelated progress.
+
+**Failure signatures:** The agent asks the human to pick source files,
+transports, frameworks or test commands; offers seven indistinguishable
+options or performs a preference survey for a reversible choice; silently
+chooses a consequential product direction; a changed preference requires
+rewriting the whole application; workers block each other waiting for
+implementation details despite stable intent contracts; onboarding requires
+a complete chat transcript; cited works are generic homepages or invented
+references; the agent claims success before an inspectable preview exists.
+
+**Evidence boundary:** This case is a prospective acceptance criterion.
+Intent-set documents and research references permit informed delegation
+but do not by themselves prove that an implementation or on-device user
+experience works. Escalate genuine preference/authority questions, not
+routine technical uncertainty.
+
 ## The scoreboard should be holistic
 
-Compare candidate architectures on **time to first meaningful preview**, **time to accepted update**, **number of independently modified authoritative definitions**, **amount of context reacquired**, **number and severity of cross-factor inconsistencies**, **parallel-agent blocking time**, **real user-flow success**, **cost of necessary verification**, **rollback/resumption reliability**, and **ability to recover why the result exists**, **upstream-to-local implementation traceability**, **preference-driven unnecessary rewrites**, and **ability to classify a failed result as rule violation versus rule inadequacy**.
+Compare candidate architectures on **time from broad vision to first meaningful interpretation or preview**, **time to accepted update**, **number of independently modified authoritative definitions**, **amount of context reacquired**, **number and severity of cross-factor inconsistencies**, **parallel-agent blocking time**, **real user-flow success**, **cost of necessary verification**, **rollback/resumption reliability**, and **ability to recover why the result exists**, **upstream-to-local implementation traceability**, **preference-driven unnecessary rewrites**, and **ability to classify a failed result as rule violation versus rule inadequacy**.
 
 Do not invent numeric targets before there is a credible baseline. A short honest comparison, observed traces, and known uncertainty are better than a manufactured score. Benchmarks should reflect actual user flows and frequent realistic variation. Expand to rare but consequential failures when the stated risk justifies the cost.
 
