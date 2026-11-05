@@ -162,6 +162,41 @@ goal or previous evidence.
 **Evidence boundary:** This is a prospective acceptance test. Documentation
 alone does not establish that this interaction is implemented.
 
+## M. Full human-to-tool software development, not philosophy alone
+
+**Starting point:** A person has only a TV or iPad and a broad request
+for a persistent playable idea. Logical Cloud has source-grounded
+intent sets, some coding tools, and a placement simulator, but its
+complete agent runtime is not assumed to exist.
+
+**Request:** "Make a fun obstacle game for my sister. Let her play
+something quickly, and tomorrow I want to ask for changes."
+
+**What success looks like:** The person receives a coherent, brief
+interpretation of the desired experience and any materially different
+creative options; the functional promises specify a playable candidate,
+consistent controls, named project identity and revision. An agent
+actually locates the relevant existing code and inspected implementation
+precedents, performs tool calls that create or modify source, runs
+proportionate realistic checks, and returns a usable artifact or preview
+with its real evidence level. Project identity, selected interpretation,
+variant and evidence survive to the next agent/session; "make the jump
+longer" changes that project without a full new interview.
+
+**Failure signatures:** We stop at a philosophical decomposition;
+the agent produces a plausible plan but no actual tool execution;
+the simulator is claimed to be a real game runtime; an APK build is
+presented as proof of usability; every adjustment requires the person
+to administer CI; prior agent context is lost; the implementation is
+rewritten from training conventions without examining its existing
+purpose or sources.
+
+**Evidence boundary:** A document describing this workflow specifies
+it, not implements it. The current simulator can verify aspects of
+placement under its model, not the full human-to-game experience.
+Progress should expose the smallest working links rather than invent
+missing connections or require all layers to be implemented serially.
+
 ## The scoreboard should be holistic
 
 Compare candidate architectures on **time from broad vision to first meaningful interpretation or preview**, **time to accepted update**, **number of independently modified authoritative definitions**, **amount of context reacquired**, **number and severity of cross-factor inconsistencies**, **parallel-agent blocking time**, **real user-flow success**, **cost of necessary verification**, **rollback/resumption reliability**, and **ability to recover why the result exists**, **upstream-to-local implementation traceability**, **preference-driven unnecessary rewrites**, and **ability to classify a failed result as rule violation versus rule inadequacy**.
