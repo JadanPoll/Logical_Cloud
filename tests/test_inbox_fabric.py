@@ -117,6 +117,9 @@ class InboxFabricTest(unittest.TestCase):
                     reopened.send_once(msg["id"], SiteClient(site.url))
                 self.assertEqual(site.attempts, 1)
                 self.assertEqual(len(site.store), 1)
+                self.assertEqual(reopened.reconcile(SiteClient(site.url).fetch()), [msg["id"]])
+                self.assertEqual(reopened.status(msg["id"]), "confirmed")
+                self.assertEqual(site.attempts, 1)  # reconciliation reads only
             finally:
                 reopened.close()
 
