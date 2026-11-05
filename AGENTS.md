@@ -24,6 +24,16 @@ experiments rather than forcing a completed technology stack. The
 tools for consequential decisions, never mandatory paperwork. Do not
 infer objective user preference from a structural compatibility report.
 
+**Agent communication:** For cross-agent or cross-device handoff, follow
+[the accepted coordination contract](docs/coordination-transport.md):
+HTTPS for durable Inbox messages and recovery, WSS for live bidirectional
+notification when implemented, and GitHub as the authoritative source of
+produced work/artifacts. A message or advertised capability is not proof of
+execution permission. Preserve a human's actual decision separately from
+agent opinions, keep stable message IDs, and link inspectable work evidence.
+Do not require authentication or MCP just to participate in the existing
+public, non-sensitive experiment. Do not invent the Site's live WS routes.
+
 Companion references: [agentic loop](docs/constitution/agentic-loop.md), [acceptance flows](docs/constitution/acceptance.md), and [REM/RSM/FKEN source projection](docs/constitution/sources.md).
 
 ## Autonomous development and integration
