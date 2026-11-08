@@ -16,7 +16,7 @@ import sys
 
 from .inbox_fabric import (
     SiteClient, AgentLedger, DEFAULT_DB, DEFAULT_SITE, ProtocolError,
-    UnknownDelivery, new_message
+    UnknownDelivery, SiteUnavailable, new_message
 )
 
 AGENT = "agent:compute"
@@ -90,7 +90,7 @@ def main(argv=None):
     db=AgentLedger(args.db)
     try:
         site=SiteClient(args.site)
-        incoming=site.fetch()
+        incoming=site.fetch(recipient=AGENT, limit=50)
         open_tasks=tasks(incoming)
         db.collect(open_tasks, AGENT)
         if args.command=="list":
@@ -121,7 +121,7 @@ def main(argv=None):
         print(json.dumps({"id":response["id"],"state":state,
             "reply_to":task["id"],"recipient":task["from"]}))
         return 0
-    except (ProtocolError, OSError) as exc:
+    except (ProtocolError, SiteUnavailable, OSError) as exc:
         print("Compute: "+str(exc),file=sys.stderr)
         return 2
     finally:
