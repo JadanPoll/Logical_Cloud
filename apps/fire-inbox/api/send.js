@@ -7,7 +7,12 @@ export default async function handler(req,res) {
   if(!configured()) return res.status(503).json({ok:false,error:'Inbox storage unavailable'});
   try {
     const url=new URL(req.url,'https://localhost');
-    const input=normalizeMessage({text:url.searchParams.get('q'),id:url.searchParams.get('id')});
+    const input=normalizeMessage({
+      text:url.searchParams.get('q'),
+      id:url.searchParams.get('id'),
+      from:url.searchParams.get('from')||undefined,
+      from_label:url.searchParams.get('from_label')||undefined
+    });
     const saved=await saveMessage(input);
     return res.status(200).json({
       ok:true,saved:true,id:input.id,message:{id:input.id},created:saved.created
