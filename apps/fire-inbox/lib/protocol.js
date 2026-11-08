@@ -37,7 +37,7 @@ export function normalizeMessage(value, suppliedId=null) {
   if (!obj || typeof obj !== 'object' || Array.isArray(obj)) throw new InputError('Message must be text or JSON object');
   const raw=obj.message ?? obj.text ?? obj.q;
   if (typeof raw !== 'string' || !raw.trim() || raw.length>TEXT_LIMIT || /\u0000/.test(raw)) {
-    throw new InputError('Message must contain 1–1600 characters');
+    throw new InputError('Message must contain 1–12000 characters');
   }
   const wrapped=parseWire(raw);
   const id=validId(suppliedId || obj.id || wrapped?.id || randomUUID());
@@ -46,6 +46,15 @@ export function normalizeMessage(value, suppliedId=null) {
   if (!MESSAGE_KINDS.has(kind)) throw new InputError('Unknown message kind');
   const from=optionalAddress(obj.from || wrapped?.from, 'human:anonymous');
   const to=optionalAddress(obj.to || wrapped?.to, 'human:owner');
+  // A human-recognizable device name is independent of its durable
+  // routing address. Both are public self-asserted metadata, not proof
+  // that the sender controls a particular device.
+  const candidateLabel=obj.from_label ?? wrapped?.from_label ?? '';
+  if (typeof candidateLabel!=='string' || candidateLabel.length>64 ||
+      /[\r\n\u0000-\u001f]/.test(candidateLabel)) {
+    throw new InputError('Invalid sender display name');
+  }
+  const from_label=candidateLabel.trim();
   const project=obj.project || wrapped?.project || '';
   if (typeof project!=='string' || project.length>120 || /[\r\n\u0000]/.test(project)) {
     throw new InputError('Invalid project');
@@ -60,7 +69,7 @@ export function normalizeMessage(value, suppliedId=null) {
   }
   return {
     id, message:raw, text:wrapped?wrapped.body:raw,
-    from, to, kind, project, reply_to, refs,
+    from, from_label, to, kind, project, reply_to, refs,
     created_at: (() => {
       const supplied=wrapped?.created_at || obj.created_at;
       if (supplied == null) return new Date().toISOString();
@@ -77,7 +86,7 @@ export function normalizeMessage(value, suppliedId=null) {
 export function publicMessage(m) {
   return {
     id:m.id, message:m.message, text:m.text, body:m.text,
-    from:m.from,to:m.to,kind:m.kind,project:m.project,
+    from:m.from,from_label:m.from_label||'',to:m.to,kind:m.kind,project:m.project,
     reply_to:m.reply_to,refs:m.refs,created_at:m.created_at,
     timestamp:m.stored_at,done:!!m.done
   };
