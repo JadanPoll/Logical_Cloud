@@ -211,7 +211,12 @@ await refresh();
 }catch(err){setMessage('Delivery uncertain. Draft retained. Request ID '+task.id+' — '+err.message+'. Check messages before resending.');}
 finally{button.disabled=false}
 });
-refresh();setInterval(refresh,30000);
+// Quota incident: do not poll the message store while free-tier access is paused.
+$('send-task').disabled=true;
+$('refresh-tasks').disabled=true;
+$('last-check').textContent='Message history temporarily paused; saved local requests retained.';
+setMessage('Task sending is paused while the storage implementation is repaired. Check public GitHub project work remains available.');
+renderTasks();
 })();
 </script>
 </body></html>

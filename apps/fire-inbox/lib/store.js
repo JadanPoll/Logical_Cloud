@@ -12,8 +12,12 @@ async function read(path) {
   if (result.statusCode!==200) throw new Error('Storage read failed: '+result.statusCode);
   return JSON.parse(await new Response(result.stream).text());
 }
+// INCIDENT QUARANTINE (2026-11-08): The initial implementation exhausted
+// Vercel Blob Hobby Simple Requests. Deny ALL Blob access until a separate,
+// usage-bounded storage implementation is reviewed and explicitly enabled.
+// Do not silently re-enable when the 30-day quota suspension expires.
 export function configured() {
-  return Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
+  return false;
 }
 export async function getMessage(id) {
   return read(messagePath(id));
