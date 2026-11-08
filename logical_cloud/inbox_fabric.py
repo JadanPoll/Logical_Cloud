@@ -18,7 +18,7 @@ from urllib.parse import urlencode, urljoin, urlsplit
 from urllib.request import Request, urlopen
 from uuid import uuid4
 
-DEFAULT_SITE = "https://fire-inbox-jadan.brinyduck2.chatgpt.site/"
+DEFAULT_SITE = "https://fire-inbox.vercel.app/"
 DEFAULT_DB = Path.home() / ".local/share/logical-cloud/inbox-agent.sqlite3"
 PARTICIPANT = re.compile(r"^(human|agent|device|project):[a-z0-9][a-z0-9._/-]{0,63}$")
 KINDS = {"question", "opinion", "proposal", "decision", "request", "progress", "result", "observation", "presence"}
@@ -108,6 +108,45 @@ def decode_message(raw: str) -> dict | None:
         return None
 
 
+def decode_structured(record: dict) -> dict | None:
+    """Recognize *addressed* native Vercel messages without treating legacy
+    public posts or arbitrary user-supplied text as agent commands."""
+    if not isinstance(record, dict) or record.get("schema_version", 1) != 1:
+        return None
+    try:
+        sender, recipient = record["from"], record["to"]
+        validate_participant(sender)
+        validate_participant(recipient)
+        kind, identifier = record["kind"], record["id"]
+        if kind not in KINDS or not isinstance(identifier, str) or not re.fullmatch(
+                r"[A-Za-z0-9._-]{8,96}", identifier):
+            return None
+        message = record.get("text")
+        if not isinstance(message, str) or not message.strip() or len(message) > 12000:
+            return None
+        refs = record.get("refs") or []
+        if not isinstance(refs, list) or len(refs) > 3 or any(
+            not isinstance(r, str) or len(r) > 180 or not (
+                r.startswith("https://github.com/") or
+                re.fullmatch(r"sha256:[a-f0-9]{64}", r)) for r in refs
+        ):
+            return None
+        reply = record.get("reply_to")
+        if reply is not None and (
+                not isinstance(reply, str) or len(reply) > 96):
+            return None
+        return {
+            "schema_version": 1, "id": identifier,
+            "from": sender, "to": recipient, "kind": kind,
+            "project": str(record.get("project") or "")[:120],
+            "reply_to": reply, "created_at": str(record.get("created_at") or ""),
+            "text": message, "refs": refs,
+            "from_label": str(record.get("from_label") or "")[:64]
+        }
+    except (KeyError, TypeError, ProtocolError):
+        return None
+
+
 def parse_site_list(body: bytes) -> list[dict]:
     """Known JSON shapes only; do not silently interpret arbitrary HTML."""
     try:
@@ -128,6 +167,8 @@ def parse_site_list(body: bytes) -> list[dict]:
         else:
             raw = None
         msg = decode_message(raw) if raw is not None else None
+        if msg is None and isinstance(record, dict):
+            msg = decode_structured(record)
         if msg is not None:
             output.append(msg)
     return output
@@ -249,7 +290,10 @@ class AgentLedger:
             for msg in messages:
                 if msg.get("to") != recipient:
                     continue
-                if decode_message(encode_message(msg)) is None:
+                # Native task requests can exceed the legacy short LC1 body
+                # bound. Their structured envelope is independently validated.
+                if decode_structured(msg) is None and decode_message(
+                        encode_message(msg)) is None:
                     continue
                 cur = self.db.execute("INSERT OR IGNORE INTO inbound(id,body) VALUES (?,?)",
                                       (msg["id"], json.dumps(msg)))
