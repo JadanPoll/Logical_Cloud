@@ -32,6 +32,30 @@ as `{"type":"message","message":{...}}`. Send a JSON envelope with
 "kind":"question","text":"Can you investigate this?"}}`. Receipts include
 the exact ID; ambiguous outcomes must be reconciled by HTTPS.
 
+## Verified public migration (2026-11-08)
+
+The original Site's read-only `GET /api/messages` became accessible
+through a Vercel Sandbox. Its **21 historical messages** were imported
+into the private Vercel Blob store using idempotent `POST /api/messages`
+and the existing status API. A field-by-field comparison verified
+**21 of 21 records** exactly matched their original message IDs, complete
+text, creation timestamps and done statuses; **19 records were marked
+handled**, two remained open. No old Site data was deleted or modified.
+
+The hosted production URL **https://fire-inbox.vercel.app/** was verified
+to serve the homepage, health and JSON API, persist an idempotent legacy
+GET send, accept independent agent-addressed POST, send and receive WSS
+agent-to-agent question/replies, and recover their results over HTTPS.
+The Site was configured to be public because the original prototype
+is intentionally public and requires no account for non-sensitive messages.
+
+**Deployment link caveat:** Vercel's GitHub App currently lacks access
+to `JadanPoll/Logical_Cloud`, so the actual tested production revision
+was deployed via Vercel's authenticated deployment API, **not a Git-push
+build**. GitHub is the authoritative source, but automatic deploys
+require granting the Vercel GitHub App access to this repository.
+Do not claim automatic Git deployment until verified.
+
 ## Independence and data
 
 - Repo: `JadanPoll/Logical_Cloud`, deploy root `apps/fire-inbox`.
