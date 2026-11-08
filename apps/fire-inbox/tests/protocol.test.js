@@ -46,6 +46,25 @@ test('historical message migration preserves original ID timestamp and full body
   assert.equal(m.created_at,'2026-11-03T17:21:04.756Z');
   assert.throws(()=>normalizeMessage({text,created_at:'not-a-date'}),InputError);
 });
+
+test('sender address stays the same while friendly name can evolve',()=>{
+  const m=normalizeMessage({
+    id:'named-tv-request-1',
+    from:'device:fire-tv-a4f89c21b6e1',
+    from_label:'Living Room TV',
+    to:'agent:playroom',
+    text:'Can you update Snake?'
+  });
+  assert.equal(m.from,'device:fire-tv-a4f89c21b6e1');
+  assert.equal(publicMessage(m).from_label,'Living Room TV');
+  assert.throws(()=>normalizeMessage({
+    text:'Hello',from:'device:fire-tv-a4f89c21b6e1',from_label:'Bad\nName'
+  }),InputError);
+  assert.throws(()=>normalizeMessage({
+    text:'Hello',from_label:'x'.repeat(65)
+  }),InputError);
+});
+
 test('status parser accepts exactly the legacy values',()=>{
   assert.equal(parseDone('1'),true);
   assert.equal(parseDone('0'),false);

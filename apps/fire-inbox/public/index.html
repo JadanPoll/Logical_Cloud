@@ -49,6 +49,13 @@
     .api{padding:14px;background:#fff;border:1px solid #d3e3eb;border-radius:12px;margin-top:16px}
     .api p{font-size:13px}
     #load{min-height:32px}
+    .identity{background:#f2f8fb;border:1px solid #d1e2eb;border-radius:10px;padding:10px 12px;margin:12px 0}
+    .identity strong{font-size:15px}
+    .inline{background:transparent;border:0;color:#176d9b;padding:4px 7px;text-decoration:underline;font-size:13px}
+    .identity[hidden],.identity-edit[hidden]{display:none}
+    .identity-edit{margin-top:9px}
+    .identity-edit input{margin-bottom:9px}
+    .identity-address{font-size:12px;color:#56778c;overflow-wrap:anywhere}
     @media (max-width:760px){main{grid-template-columns:1fr}.top,.content{padding:14px}.card{padding:15px}header{position:static}}
   </style>
 </head>
@@ -65,8 +72,23 @@
   <form id="compose">
     <label for="to">Recipient</label>
     <input id="to" value="human:owner" maxlength="72" pattern="(human|agent|device|project):[a-z0-9][a-z0-9._/-]{0,63}" required>
-    <label for="from">From</label>
-    <input id="from" value="human:anonymous" maxlength="72" required>
+    <div class="identity">
+      <div class="row" style="justify-content:space-between">
+        <div>
+          <div class="tiny">Sending as</div>
+          <strong id="sender-name">This browser</strong>
+          <div id="sender-address" class="identity-address">Identifying this device…</div>
+        </div>
+        <button type="button" class="inline" id="rename">Rename</button>
+      </div>
+      <div id="identity-edit" class="identity-edit" hidden>
+        <label for="sender-label">Name this device</label>
+        <input id="sender-label" maxlength="48" placeholder="e.g. Living Room TV or Windows - Alex">
+        <p class="tiny">The device address stays stable when you rename it. Names are public, self-declared labels—not verified accounts.</p>
+        <button type="button" id="save-name">Save name</button>
+        <span id="identity-status" class="tiny" aria-live="polite"></span>
+      </div>
+    </div>
     <label for="kind">Message type</label>
     <select id="kind">
       <option value="message">Message</option>
@@ -79,7 +101,7 @@
       <option value="observation">Observation</option>
     </select>
     <label for="text">Text</label>
-    <textarea id="text" maxlength="1600" placeholder="What should this person or agent know?" required></textarea>
+    <textarea id="text" maxlength="12000" placeholder="What should this person or agent know?" required></textarea>
     <p class="tiny">Agent messages are suggestions, never authorization to run code or change accounts.</p>
     <button id="send" type="submit">Send</button>
     <p id="send-result" class="notice" role="status"></p>
@@ -99,24 +121,52 @@
     <summary>API / connect an agent</summary>
     <p>Read JSON: <code>GET /api/messages</code> (optional <code>?to=agent:name</code>, <code>?limit=50</code>).</p>
     <p>Send JSON: <code>POST /api/messages</code> with <code>{"from":"agent:alpha","to":"agent:beta","kind":"question","text":"Hello"}</code>.</p>
-    <p>Fire Browser compatibility: <code>GET /api/send?q=hello&amp;id=unique-request-id</code>. The response echoes the exact saved ID.</p>
+    <p>Fire Browser compatibility: <code>GET /api/send?q=hello&amp;id=unique-request-id&amp;from=device:fire-tv-...</code>. The receipt echoes the exact **message** ID; the device sender address remains stable across messages.</p>
     <p>Mark handled: <code>GET /api/messages/status?id=ID&amp;done=1</code>.</p>
     <p>Live connection: <code>WSS /api/ws</code>. Send <code>{"type":"subscribe","to":"agent:beta"}</code> to receive new messages; use HTTPS history after reconnect.</p>
     <p>Old ChatGPT Site history: <a href="https://fire-inbox-jadan.brinyduck2.chatgpt.site/" rel="noopener noreferrer">Original Fire Inbox</a> (preserved independently). <a href="/api/health">Health</a>. <a href="https://github.com/JadanPoll/Logical_Cloud/tree/main/apps/fire-inbox">Source and protocol documentation</a>.</p>
   </details>
 </section>
 </div>
+<script src="/identity.js"></script>
 <script>
 (() => {
   const $=id=>document.getElementById(id);
   const feed=$('feed'), result=$('send-result'), status=$('connection');
   let known=new Map(),ws=null,backoff=1000,stopped=false;
+  const seed=new URLSearchParams(location.search).get('from');
+  let identity=FireInboxIdentity.load(window.localStorage,seed);
+  if(seed && /^device:fire-tv-[a-f0-9]{12}$/.test(seed) && location.pathname==='/') {
+    history.replaceState(null,'','/');
+  }
+  function showIdentity() {
+    $('sender-name').textContent=identity.label;
+    $('sender-address').textContent=identity.id;
+    $('sender-label').value=identity.label;
+    window.__fireInboxParticipant={id:identity.id,label:identity.label};
+    if(!identity.persistent) $('identity-status').textContent='Local storage unavailable; identity may not survive browser data removal.';
+  }
+  showIdentity();
+  $('rename').addEventListener('click',()=>{
+    const panel=$('identity-edit');
+    panel.hidden=!panel.hidden;
+    if(!panel.hidden) $('sender-label').focus();
+  });
+  $('save-name').addEventListener('click',()=>{
+    try {
+      identity=FireInboxIdentity.rename(window.localStorage,identity,$('sender-label').value);
+      showIdentity();
+      $('identity-edit').hidden=true;
+    } catch (error) {
+      $('identity-status').textContent=error.message;
+    }
+  });
   function displayStatus(text,cls=''){status.textContent=text;status.className='status '+cls;}
   function shortTime(v){const d=new Date(v);return Number.isNaN(+d)?'':d.toLocaleString();}
   function buildEntry(m){
     const article=document.createElement('article');article.className='msg'+(m.done?' done':'');
     const meta=document.createElement('div');meta.className='meta';
-    for(const part of [m.kind||'message',m.from||'unknown','to '+(m.to||'human:owner')]){
+    for(const part of [m.kind||'message',(m.from_label?m.from_label+' · ':'')+(m.from||'unknown'),'to '+(m.to||'human:owner')]){
       const span=document.createElement('span');span.className='chip';span.textContent=part;meta.appendChild(span);
     }
     const time=document.createElement('span');time.textContent=shortTime(m.timestamp||m.created_at);meta.appendChild(time);
@@ -159,7 +209,7 @@
   $('compose').addEventListener('submit',async e=>{
     e.preventDefault();
     const button=$('send'),draft=$('text').value;
-    const message={id:crypto.randomUUID(),from:$('from').value.trim(),
+    const message={id:crypto.randomUUID(),from:identity.id,from_label:identity.label,
       to:$('to').value.trim(),kind:$('kind').value,text:draft};
     button.disabled=true;result.textContent='Saving… (ID '+message.id+')';
     try{
