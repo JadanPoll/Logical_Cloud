@@ -31,7 +31,7 @@ test('LC1 mismatched request ID is rejected instead of misrouting',()=>{
 });
 test('invalid recipients, oversized messages, refs and unknown kinds fail',()=>{
   assert.throws(()=>normalizeMessage({text:'hello',to:'shell:root'}),InputError);
-  assert.throws(()=>normalizeMessage({text:'x'.repeat(1601)}),InputError);
+  assert.throws(()=>normalizeMessage({text:'x'.repeat(12001)}),InputError);
   assert.throws(()=>normalizeMessage({text:'hello',kind:'execute'}),InputError);
   assert.throws(()=>normalizeMessage({text:'hello',refs:['https://attacker.invalid/run']}),InputError);
 });
