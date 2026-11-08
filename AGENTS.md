@@ -36,6 +36,15 @@ public, non-sensitive experiment. Do not invent the Site's live WS routes.
 
 **Working Inbox adapter:** [`python -m logical_cloud.inbox_fabric`](docs/inbox-agent-bridge.md) provides short, public, addressed messages via the existing HTTP Inbox route. Use message IDs, specific recipients, observed receipts, deduplicated reads and GitHub refs for produced work. A received message is **not** execution permission, and this code does not establish the hosted Site's JSON/WSS compatibility. Do not retry an uncertain send without reconciling the ID.
 
+**Compute task loop:** [`docs/compute-task-loop.md`](docs/compute-task-loop.md)
+defines the human-facing task-first workflow and stopping criteria.
+The public Vercel Inbox transports durable requests/replies and
+GitHub work refs; it must **never** automatically run untrusted requests.
+Use `logical_cloud.compute_agent` for inspected, explicitly
+operator-approved work and responses. Real public GitHub inspection
+is independent from agent availability. Keep the TV screen focused
+on "send task / see result" rather than an accumulating set of controls.
+
 Companion references: [agentic loop](docs/constitution/agentic-loop.md), [acceptance flows](docs/constitution/acceptance.md), and [REM/RSM/FKEN source projection](docs/constitution/sources.md).
 
 ## Autonomous development and integration
