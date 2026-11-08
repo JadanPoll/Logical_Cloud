@@ -239,7 +239,12 @@
     }catch{displayStatus('HTTPS recovery','warn');}
   }
   window.addEventListener('beforeunload',()=>{stopped=true;if(ws)ws.close();});
-  setInterval(refresh,30000);refresh();connect();
+  // Quota incident: disable automatic history polling and WSS reconnection.
+  // Previously each history fetch performed dozens of Vercel Blob reads.
+  displayStatus('Messages paused','warn');
+  $('load').textContent='Message storage is paused following a free-tier quota incident. Existing records are preserved. Do not resend unconfirmed requests.';
+  $('send').disabled=true;
+  result.textContent='Sending temporarily disabled while storage is repaired.';
 })();
 </script>
 </body></html>
