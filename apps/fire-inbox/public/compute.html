@@ -99,14 +99,59 @@ line(box,'Open pull requests',s.checks?.pull_requests===false?'Unavailable':Stri
 for(const p of s.open_prs){const row=document.createElement('p');external(row,'#'+p.number+' '+p.title,p.url);box.append(row)}
 if(s.workflow.length){const w=s.workflow[0];line(box,'Latest build',w.name+' — '+(w.conclusion||w.status));external(box,'View build',w.url)}
 else if(s.checks?.workflows===false)line(box,'Build history','Unavailable (other results are still valid)');
-const stamp=document.createElement('p');stamp.className='muted';stamp.textContent='Checked '+new Date(s.checked_at).toLocaleString()+' · Public GitHub evidence';box.append(stamp);
+const stamp=document.createElement('p');stamp.className='muted';stamp.textContent='Checked '+new Date(s.checked_at).toLocaleString()+' · '+(s.note||'Public GitHub evidence');box.append(stamp);
+}
+async function inspectDirect(repo){
+  // GitHub's public REST API supports browser CORS. This is an independent
+  // user-initiated fallback when the hosted Function cannot reach GitHub.
+  if(!/^[A-Za-z0-9_.-]{1,39}\/[A-Za-z0-9_.-]{1,100}$/.test(repo)||repo.includes('..'))
+    throw Error('Enter owner/repository');
+  const root='https://api.github.com/repos/'+repo;
+  async function get(path){
+    const response=await fetch(root+path,{headers:{'Accept':'application/vnd.github+json'}});
+    if(!response.ok)throw Error('GitHub HTTP '+response.status);
+    return response.json();
+  }
+  const info=await get('');
+  const settled=await Promise.allSettled([
+    get('/commits?per_page=1'),get('/pulls?state=open&per_page=5'),
+    get('/actions/runs?per_page=3')
+  ]);
+  const ok=i=>settled[i].status==='fulfilled';
+  const commits=ok(0)?settled[0].value:[];
+  const pulls=ok(1)?settled[1].value:[];
+  const runs=ok(2)?settled[2].value.workflow_runs:[];
+  return {ok:true,summary:{
+    repository:repo,description:info.description||'',default_branch:info.default_branch||'',
+    latest_commit:commits[0]?{
+      sha:commits[0].sha?.slice(0,12),
+      title:commits[0].commit?.message?.split('\n')[0]||'',
+      url:commits[0].html_url
+    }:null,
+    open_prs:pulls.slice(0,5).map(p=>({number:p.number,title:p.title,url:p.html_url})),
+    workflow:runs.slice(0,3).map(w=>({
+      name:w.name,status:w.status,conclusion:w.conclusion,url:w.html_url
+    })),
+    checks:{latest_commit:ok(0),pull_requests:ok(1),workflows:ok(2)},
+    checked_at:new Date().toISOString(),
+    note:'Direct browser fallback; public GitHub metadata, not proof of physical TV operation.'
+  }};
 }
 $('inspect-form').addEventListener('submit',async event=>{
 event.preventDefault();const b=$('inspect');b.disabled=true;$('report').textContent='Checking live public GitHub information…';
 try{
-const repo=$('repo').value.trim();const r=await fetch('/api/compute/inspect?repo='+encodeURIComponent(repo),{cache:'no-store'});
-const d=await r.json();if(!r.ok||!d.ok)throw Error(d.error||'No result');
-renderReport(d);
+const repo=$('repo').value.trim();let result;
+try {
+  const r=await fetch('/api/compute/inspect?repo='+encodeURIComponent(repo),{cache:'no-store'});
+  const data=await r.json();
+  if(!r.ok||!data.ok)throw Error(data.error||'Hosted inspector unavailable');
+  result=data;
+} catch(serverError) {
+  $('report').textContent='Server route unavailable. Checking GitHub directly…';
+  result=await inspectDirect(repo);
+  result.summary.note+=' Hosted server route was unavailable.';
+}
+renderReport(result);
 }catch(e){$('report').textContent='Could not inspect: '+e.message+'. Project name retained.'}finally{b.disabled=false}
 });
 function formatDate(s){const d=new Date(s);return Number.isNaN(+d)?'':d.toLocaleString()}
