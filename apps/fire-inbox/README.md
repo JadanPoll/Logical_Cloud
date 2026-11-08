@@ -14,6 +14,43 @@ records without modifying the original site, preserving their IDs, message
 text, original timestamps and handled flags. Verify the imported count and
 individual fields in the live Vercel deployment before claiming completion.
 
+## Persistent participant identity — the REM week-two rule
+
+The sender has a stable **participant address** and a separate editable
+**human-readable device name**. A user can recognize "Living Room TV" or
+"Windows - Alex" weeks later rather than seeing a stream of anonymous
+messages and having to remember which device produced them.
+
+- The Fire TV Browser generates `device:fire-tv-<12 random hex>` once,
+  stores it in Android SharedPreferences and hands that value to the Inbox
+  on navigation. The same address is used by its native Send action for
+  both short GET and long JSON POST messages.
+- Other browsers generate `device:browser-<random id>` once and keep it in
+  site-local storage. The name can be changed under **Sending as → Rename**.
+  The address is not regenerated when the user changes the display name.
+- All messages keep **unique message IDs**, distinct from the stable
+  participant address. Recipients and agent adapters still route using
+  the stable `from`/`to` addresses rather than display names.
+- Each message stores a snapshot of the current public `from_label`.
+  Older messages without a label retain their original source address;
+  historical records are **not silently reattributed**.
+- Normal app updates and browser reloads preserve identity. Clearing
+  Android app data/reinstalling the Fire Browser can reset the native ID;
+  clearing website storage can reset a normal browser ID. The interface
+  shows a persistence warning if browser storage is unavailable.
+- This is **self-declared identity**, **not cryptographic authentication**.
+  Never authorize agent execution, privileged tool calls or account access
+  merely because a message claims a certain device name or ID.
+- Native device identity requires no OS username, account details, MAC
+  address or hardware fingerprint. A user can choose a recognizable name,
+  including "Windows - Alice", without automatically disclosing usernames.
+
+This is a direct application of
+[REM's week/month rediscoverability principle](
+https://github.com/JadanPoll/Learning_Visualizations_Taxonomy/blob/main/Navigationals/The_Richer_Engineering_Method.md):
+the daily experience shows the current identity, while the seldom-used
+rename action stays one click away and does not grow a separate menu.
+
 ## Public routes
 
 | Route | Purpose |
