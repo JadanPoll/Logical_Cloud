@@ -35,6 +35,17 @@ test('invalid recipients, oversized messages, refs and unknown kinds fail',()=>{
   assert.throws(()=>normalizeMessage({text:'hello',kind:'execute'}),InputError);
   assert.throws(()=>normalizeMessage({text:'hello',refs:['https://attacker.invalid/run']}),InputError);
 });
+test('historical message migration preserves original ID timestamp and full body',()=>{
+  const text='A'.repeat(5000);
+  const m=normalizeMessage({
+    id:'historical-item-20261103',
+    text, created_at:'2026-11-03T17:21:04.756Z'
+  });
+  assert.equal(m.id,'historical-item-20261103');
+  assert.equal(m.message,text);
+  assert.equal(m.created_at,'2026-11-03T17:21:04.756Z');
+  assert.throws(()=>normalizeMessage({text,created_at:'not-a-date'}),InputError);
+});
 test('status parser accepts exactly the legacy values',()=>{
   assert.equal(parseDone('1'),true);
   assert.equal(parseDone('0'),false);
