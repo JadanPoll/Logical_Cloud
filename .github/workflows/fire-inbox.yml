@@ -26,7 +26,7 @@ jobs:
       - name: Validate Node syntax
         working-directory: apps/fire-inbox
         run: |
-          for f in api/*.js api/messages/*.js lib/*.js tests/*.js; do node --check "$f"; done
+          for f in api/*.js api/messages/*.js api/compute/*.js lib/*.js tests/*.js; do node --check "$f"; done
       - name: Test protocol
         working-directory: apps/fire-inbox
         run: node --test tests/*.test.js
