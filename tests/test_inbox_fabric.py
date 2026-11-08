@@ -123,6 +123,33 @@ class InboxFabricTest(unittest.TestCase):
             finally:
                 reopened.close()
 
+    def test_native_compute_request_is_deliverable_without_execute_authority(self):
+        long_goal = "Investigate Snake input. " * 75
+        original = {
+            "schema_version": 1,
+            "id": "native-compute-task-20261108",
+            "from": "device:fire-console-0123456789ab",
+            "from_label": "Fire Console TV",
+            "to": "agent:compute", "kind": "request",
+            "project": "compute", "reply_to": None,
+            "text": long_goal, "created_at": "2026-11-08T13:00:00Z",
+            "refs": []
+        }
+        parsed = parse_site_list(json.dumps({"messages": [original]}).encode())
+        self.assertEqual(len(parsed), 1)
+        self.assertEqual(parsed[0]["text"], long_goal)
+        self.assertEqual(parsed[0]["from_label"], "Fire Console TV")
+        with tempfile.TemporaryDirectory() as folder:
+            ledger = AgentLedger(Path(folder) / "inbox.sqlite")
+            try:
+                self.assertEqual(ledger.collect(parsed, "agent:compute"), 1)
+                self.assertEqual(ledger.collect(parsed, "agent:compute"), 0)
+                self.assertEqual(ledger.received()[0]["kind"], "request")
+            finally:
+                ledger.close()
+        bad = dict(original, to="shell:root")
+        self.assertEqual(parse_site_list(json.dumps({"messages":[bad]}).encode()), [])
+
     def test_legacy_messages_do_not_turn_into_agent_commands(self):
         self.assertEqual(parse_site_list(
             json.dumps({"messages": [{"id": "plain", "message": "rm -rf /"}]}).encode()), [])
