@@ -1,0 +1,14 @@
+{
+  "name": "logical-cloud-fire-inbox",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.3.0",
+    "ws": "^8.18.3"
+  }
+}
