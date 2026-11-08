@@ -61,14 +61,28 @@ export default async function handler(req,res) {
   try {
     const url=new URL(req.url,'https://localhost');
     const repo=normalized(url.searchParams.get('repo'));
-    const [info,commits,prs,runs]=await Promise.all([
-      github(urlFor(repo)),
+    const info=await github(urlFor(repo));
+    if(info.private)throw new InputError('Private repositories cannot be inspected anonymously',403);
+    // A repository can have Actions disabled or one endpoint rate-limited.
+    // The rest of a useful inspection must still succeed, with failures
+    // prominently distinguished from a genuinely empty list.
+    const [commitResult,prResult,runResult]=await Promise.allSettled([
       github(urlFor(repo,'/commits?per_page=1')),
       github(urlFor(repo,'/pulls?state=open&per_page=5')),
       github(urlFor(repo,'/actions/runs?per_page=3'))
     ]);
-    if(info.private)throw new InputError('Private repositories cannot be inspected anonymously',403);
-    const summary=summarize(repo,{info,commit:commits[0],prs,runs});
+    const checks={
+      latest_commit:commitResult.status==='fulfilled',
+      pull_requests:prResult.status==='fulfilled',
+      workflows:runResult.status==='fulfilled'
+    };
+    const summary=summarize(repo,{
+      info,
+      commit:checks.latest_commit?commitResult.value[0]:null,
+      prs:checks.pull_requests?prResult.value:[],
+      runs:checks.workflows?runResult.value:{workflow_runs:[]}
+    });
+    summary.checks=checks;
     return res.status(200).json({ok:true,summary});
   } catch(e) {
     const known=e instanceof InputError;
