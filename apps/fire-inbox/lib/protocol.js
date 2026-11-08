@@ -6,7 +6,7 @@ export const MESSAGE_KINDS = new Set([
 ]);
 const ADDRESS = /^(human|agent|device|project):[a-z0-9][a-z0-9._/-]{0,63}$/;
 const ID = /^[a-zA-Z0-9._-]{8,96}$/;
-const TEXT_LIMIT = 1600;
+const TEXT_LIMIT = 12000;
 
 export class InputError extends Error {
   constructor(message, status=400) { super(message); this.status=status; }
@@ -61,7 +61,16 @@ export function normalizeMessage(value, suppliedId=null) {
   return {
     id, message:raw, text:wrapped?wrapped.body:raw,
     from, to, kind, project, reply_to, refs,
-    created_at:wrapped?.created_at || new Date().toISOString(),
+    created_at: (() => {
+      const supplied=wrapped?.created_at || obj.created_at;
+      if (supplied == null) return new Date().toISOString();
+      if (typeof supplied!=='string' || supplied.length>40 ||
+          !/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?Z$/.test(supplied) ||
+          !Number.isFinite(Date.parse(supplied))) {
+        throw new InputError('Invalid created_at timestamp');
+      }
+      return supplied;
+    })(),
     stored_at:new Date().toISOString(), done:false, schema_version:1
   };
 }

@@ -76,7 +76,9 @@ export async function listMessages({recipient,after,limit=50}={}) {
     const chunk=await Promise.all(filtered.slice(i,i+10).map(b=>read(b.pathname)));
     rows.push(...chunk.filter(Boolean));
   }
-  const matching=rows.filter(m=>!recipient || m.to===recipient).slice(0,limit);
+  const matching=rows.filter(m=>!recipient || m.to===recipient)
+    .sort((a,b)=>Date.parse(b.created_at)-Date.parse(a.created_at))
+    .slice(0,limit);
   // Status is a separate key, so editing a checkmark never overwrites
   // the durable immutable message record.
   const results=[];
