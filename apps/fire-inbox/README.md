@@ -6,9 +6,13 @@ concrete inter-agent communication fabric for Logical Cloud / Fire Console.
 **Implementation scope:** faithful compatibility with the Fire Browser
 `GET /api/send?q=&id=` receipt and public `GET /api/messages`,
 plus structured POST, message-addressed JSON, status checkboxes and WSS.
-The original ChatGPT Site's source and database were **not available**
-to copy; this is an independent implementation of the observed contract,
-not an unverified assertion that historical messages were migrated.
+The original ChatGPT Site's application source was not accessible from the
+connected coding tools. However its public read-only /api/messages endpoint
+became reachable from a Vercel sandbox, exposing 21 historical records
+with id, body, created_at, done. This implementation can import those
+records without modifying the original site, preserving their IDs, message
+text, original timestamps and handled flags. Verify the imported count and
+individual fields in the live Vercel deployment before claiming completion.
 
 ## Public routes
 
@@ -74,8 +78,12 @@ Do not commit credentials. Check `/api/health` before migration.
    close and reopen a client; verify both messages remain available.
 5. Verify WSS subscribe and send from independent clients, plus HTTPS
    recovery across disconnections. Status checkboxes must persist.
-6. Export and import the original Site's data **only if accessible**; do
-   not imply that unseen messages have been transferred.
+6. Fetch the original public site's /api/messages from a connected
+   Vercel sandbox (it was reachable there on 2026-11-08), and idempotently
+   import each record by POST /api/messages using exactly the original
+   ID/body/created_at, then mark records with done=1 through the status
+   endpoint. Verify original and imported counts and metadata. A migration
+   must not overwrite the source or destroy original records.
 7. Only after all accepted flows pass, update the Fire Browser URL and
    Logical Cloud agent clients in a separate tested change.
 
