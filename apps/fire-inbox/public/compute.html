@@ -95,9 +95,10 @@ if(s.latest_commit){
 line(box,'Latest change',s.latest_commit.title);
 external(box,'View commit',s.latest_commit.url);
 }
-line(box,'Open pull requests',String(s.open_prs.length));
+line(box,'Open pull requests',s.checks?.pull_requests===false?'Unavailable':String(s.open_prs.length));
 for(const p of s.open_prs){const row=document.createElement('p');external(row,'#'+p.number+' '+p.title,p.url);box.append(row)}
 if(s.workflow.length){const w=s.workflow[0];line(box,'Latest build',w.name+' — '+(w.conclusion||w.status));external(box,'View build',w.url)}
+else if(s.checks?.workflows===false)line(box,'Build history','Unavailable (other results are still valid)');
 const stamp=document.createElement('p');stamp.className='muted';stamp.textContent='Checked '+new Date(s.checked_at).toLocaleString()+' · Public GitHub evidence';box.append(stamp);
 }
 $('inspect-form').addEventListener('submit',async event=>{
