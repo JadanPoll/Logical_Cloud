@@ -64,6 +64,19 @@ a missing dependency, and the cheapest informative experiment. A candidate
 whose declared constraints are satisfied is **not** thereby proven to
 work; human goals and preferences remain authoritative.
 
+## Compute — a task-first TV work loop
+
+The first [Compute task loop](docs/compute-task-loop.md) is now implemented
+across the Fire Console and the Vercel Inbox. A TV user can send a durable,
+addressed request to `agent:compute`, recover the exact task ID,
+read agent replies, and open produced GitHub work. The hosted
+[Compute page](https://fire-inbox.vercel.app/compute.html) also inspects
+**real public GitHub repository activity** without pairing an agent.
+An independent operator-controlled adapter can explicitly approve a
+task for authenticated Codex CLI in a dedicated workspace. Sending
+public requests never authorizes code execution and does **not**
+mean an always-on autonomous worker has been connected.
+
 ## Coordination decision — Fire Inbox + GitHub
 
 The selected Layer 2 communication interface is **ordinary HTTPS** for

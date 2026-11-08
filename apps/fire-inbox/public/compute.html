@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light">
+<title>Compute — Fire Console</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#edf5f9;color:#15344c}
+*{box-sizing:border-box}body{margin:0;padding:20px}
+main{max-width:1050px;margin:auto}
+header{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+h1{font-size:29px;margin:0}h2{font-size:20px;margin:0 0 12px}
+p{line-height:1.5;margin:7px 0 12px}
+a{color:#126995}
+.panel{background:#fff;border:1px solid #cfdfe7;border-radius:15px;padding:20px;margin-bottom:15px}
+label{font-weight:650;display:block;margin-bottom:8px}
+textarea,input,button{font:inherit;border-radius:9px}
+textarea,input{width:100%;background:#fff;color:#123047;border:1px solid #b8d0dc;padding:13px;min-height:47px}
+textarea{resize:vertical;min-height:108px}
+button{cursor:pointer;padding:12px 18px;background:#16769e;color:white;border:1px solid #16769e;font-weight:700}
+button.secondary{background:white;color:#166287;border-color:#b9d2df}
+button:disabled{opacity:.5}
+:focus-visible{outline:3px solid #e69f3a;outline-offset:3px}
+.row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+small,.muted{color:#59798d}
+.status{padding:10px 12px;background:#eaf3f8;border-radius:9px;white-space:pre-wrap;overflow-wrap:anywhere}
+.warning{background:#fff5e5;color:#795a25}
+.task{padding:12px 0;border-bottom:1px solid #d8e6ed}
+.task:last-child{border:0}
+.task strong{display:block;overflow-wrap:anywhere}
+.task .meta{font-size:13px;color:#5a778b;margin:5px 0}
+.result{border-left:4px solid #2f9b86;padding:8px 11px;background:#edf8f4;margin-top:8px;white-space:pre-wrap;overflow-wrap:anywhere}
+.tag{display:inline-block;border:1px solid #c2d9e4;padding:4px 8px;border-radius:20px;color:#3b6885;font-size:12px}
+details{margin-top:12px}
+summary{cursor:pointer}
+#report{white-space:pre-wrap}
+#report a{overflow-wrap:anywhere}
+@media(min-width:850px){.two{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:15px}}
+</style>
+</head>
+<body><main>
+<header><div><h1>Compute</h1><p class="muted">One intention. See what happened. Return to it later.</p></div><div><a href="/">Inbox</a> · <span id="self" class="tag">Identifying…</span></div></header>
+<div class="two">
+<div class="panel">
+<h2>What should we work on?</h2>
+<p class="muted">Send an idea to your agents. It stays in the Inbox until a connected agent responds; sending does not run code by itself.</p>
+<form id="task-form">
+<label for="task">Your goal</label><textarea id="task" maxlength="6000" placeholder="For example: Improve the Snake controls and show me what changed" required></textarea>
+<div class="row"><button id="send-task" type="submit">Send to agents</button><button class="secondary" type="button" id="refresh-tasks">Refresh results</button></div>
+</form>
+<p id="task-status" class="status" role="status">Ready. No work is submitted automatically.</p>
+</div>
+<div class="panel">
+<h2>Check project work</h2>
+<p class="muted">Get a live report from public GitHub without pairing an executor.</p>
+<form id="inspect-form"><label for="repo">GitHub project</label>
+<input id="repo" value="JadanPoll/fire" spellcheck="false" required>
+<button id="inspect" style="margin-top:10px" type="submit">Check work</button></form>
+<div id="report" class="status" style="margin-top:12px">Select Check work to inspect current commits, pull requests and builds.</div>
+</div>
+</div>
+<section class="panel">
+<div class="row" style="justify-content:space-between"><h2>Recent requests</h2><span id="last-check" class="muted">Recoverable from Inbox history</span></div>
+<div id="tasks" class="muted">Loading recent requests…</div>
+</section>
+<section class="panel">
+<details><summary>How Compute connects to real agents</summary>
+<p>Messages go to <code>agent:compute</code> over HTTPS. Agents can listen, investigate or work in their own authorized workspaces, and reply to this device with <code>reply_to</code> and links to GitHub work. The Inbox stores communication, not execution privileges. A public message is never permission to run shell commands, change accounts, or spend money.</p>
+<p>Private Codex execution remains available from the Fire Console's paired-host controls. This page does not expose its pairing token. <a href="https://github.com/JadanPoll/Logical_Cloud/blob/main/docs/inbox-agent-bridge.md">Connect an agent</a>.</p>
+</details>
+</section>
+</main>
+<script src="/identity.js"></script>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const seed=new URLSearchParams(location.search).get('from');
+let identity=FireInboxIdentity.load(localStorage,seed);
+$('self').textContent=identity.label;
+let known=new Map();
+const storageKey='compute_recent_tasks_v1';
+function readSaved(){try{const a=JSON.parse(localStorage.getItem(storageKey)||'[]');return Array.isArray(a)?a.slice(0,20):[]}catch{return []}}
+let mine=readSaved();
+function saveMine(){try{localStorage.setItem(storageKey,JSON.stringify(mine.slice(0,20)))}catch{}}
+function setMessage(text){$('task-status').textContent=text}
+function line(parent,title,value){
+const p=document.createElement('p');const strong=document.createElement('strong');strong.textContent=title+': ';
+const span=document.createElement('span');span.textContent=value||'Not available';p.append(strong,span);parent.append(p)}
+function external(parent,label,url){
+if(typeof url!=='string'||!url.startsWith('https://github.com/'))return;
+const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label;parent.append(a);
+}
+function renderReport(d){
+const box=$('report');box.replaceChildren();const s=d.summary;
+if(!s){box.textContent='No report received';return}
+line(box,'Repository',s.repository);line(box,'Description',s.description);
+if(s.latest_commit){
+line(box,'Latest change',s.latest_commit.title);
+external(box,'View commit',s.latest_commit.url);
+}
+line(box,'Open pull requests',s.checks?.pull_requests===false?'Unavailable':String(s.open_prs.length));
+for(const p of s.open_prs){const row=document.createElement('p');external(row,'#'+p.number+' '+p.title,p.url);box.append(row)}
+if(s.workflow.length){const w=s.workflow[0];line(box,'Latest build',w.name+' — '+(w.conclusion||w.status));external(box,'View build',w.url)}
+else if(s.checks?.workflows===false)line(box,'Build history','Unavailable (other results are still valid)');
+const stamp=document.createElement('p');stamp.className='muted';stamp.textContent='Checked '+new Date(s.checked_at).toLocaleString()+' · Public GitHub evidence';box.append(stamp);
+}
+$('inspect-form').addEventListener('submit',async event=>{
+event.preventDefault();const b=$('inspect');b.disabled=true;$('report').textContent='Checking live public GitHub information…';
+try{
+const repo=$('repo').value.trim();const r=await fetch('/api/compute/inspect?repo='+encodeURIComponent(repo),{cache:'no-store'});
+const d=await r.json();if(!r.ok||!d.ok)throw Error(d.error||'No result');
+renderReport(d);
+}catch(e){$('report').textContent='Could not inspect: '+e.message+'. Project name retained.'}finally{b.disabled=false}
+});
+function formatDate(s){const d=new Date(s);return Number.isNaN(+d)?'':d.toLocaleString()}
+function renderTasks(){
+const root=$('tasks');root.replaceChildren();
+const myAddress=identity.id;
+const tasks=[...known.values()].filter(m=>m.from===myAddress&&m.to==='agent:compute'&&m.kind==='request');
+const ids=new Set(tasks.map(m=>m.id));
+for(const old of mine){
+if(ids.has(old.id))continue;
+tasks.push(old);ids.add(old.id);
+}
+tasks.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+if(!tasks.length){root.textContent='No requests yet. Your first task will appear here.';return}
+for(const task of tasks.slice(0,12)){
+const card=document.createElement('article');card.className='task';
+const title=document.createElement('strong');title.textContent=task.text||task.message||'Untitled request';
+const meta=document.createElement('div');meta.className='meta';
+const responses=[...known.values()].filter(m=>m.reply_to===task.id && m.to===myAddress);
+responses.sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+const final=responses.findLast?.(m=>m.kind==='result')||responses.find(m=>m.kind==='result');
+meta.textContent=(final?'Result received':responses.length?'Agent replied':'Awaiting an agent')+' · '+formatDate(task.created_at)+' · '+task.id;
+card.append(title,meta);
+for(const response of responses.slice(-4)){
+const reply=document.createElement('div');reply.className='result';reply.textContent=(response.from_label||response.from||'Agent')+': '+response.text;
+for(const ref of response.refs||[])external(reply,'\nView GitHub work',ref);
+card.append(reply);
+}
+root.append(card);
+}
+}
+async function refresh(){
+try{
+const r=await fetch('/api/messages?limit=100',{cache:'no-store'});const d=await r.json();
+if(!r.ok||!Array.isArray(d.messages))throw Error(d.error||'No history');
+for(const m of d.messages)known.set(m.id,m);
+const outgoing=d.messages.filter(m=>m.from===identity.id && m.to==='agent:compute' && m.kind==='request');
+for(const m of outgoing)if(!mine.some(x=>x.id===m.id))mine.unshift(m);
+mine=mine.slice(0,20);saveMine();renderTasks();
+$('last-check').textContent='Refreshed '+new Date().toLocaleTimeString();
+}catch(e){$('last-check').textContent='Offline: '+e.message+'. Saved requests retained.';renderTasks()}
+}
+$('refresh-tasks').addEventListener('click',refresh);
+$('task-form').addEventListener('submit',async e=>{
+e.preventDefault();const button=$('send-task');
+const draft=$('task').value.trim();if(!draft)return;
+const task={schema_version:1,id:crypto.randomUUID(),from:identity.id,from_label:identity.label,
+to:'agent:compute',kind:'request',project:'compute',text:draft,created_at:new Date().toISOString()};
+button.disabled=true;setMessage('Saving request '+task.id+'…');
+try{
+const r=await fetch('/api/messages',{method:'POST',headers:{'Content-Type':'application/json'},
+body:JSON.stringify(task)});const d=await r.json();
+if(!r.ok||!d.ok||d.id!==task.id)throw Error(d.error||'Receipt not confirmed');
+mine.unshift(task);mine=mine.slice(0,20);saveMine();
+$('task').value='';setMessage('Saved. Agents can pick this up when connected. Nothing has executed yet.');
+await refresh();
+}catch(err){setMessage('Delivery uncertain. Draft retained. Request ID '+task.id+' — '+err.message+'. Check messages before resending.');}
+finally{button.disabled=false}
+});
+refresh();setInterval(refresh,30000);
+})();
+</script>
+</body></html>
