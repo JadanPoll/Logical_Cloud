@@ -200,12 +200,20 @@ class SiteClient:
                 original = urlsplit(self.site)
                 if final.scheme != original.scheme or final.netloc != original.netloc:
                     raise SiteUnavailable("Site redirected off origin; no receipt accepted")
-                return response.read(131072)
+                body = response.read(512001)
+                if len(body) > 512000:
+                    raise ProtocolError("Inbox history exceeds 512 KB; use a smaller recipient-scoped request")
+                return body
         except (HTTPError, URLError, TimeoutError, OSError) as e:
             raise SiteUnavailable(f"Site request unverified: {type(e).__name__}") from e
 
-    def fetch(self) -> list[dict]:
-        return parse_site_list(self._request("api/messages"))
+    def fetch(self, recipient: str | None = None, limit: int = 50) -> list[dict]:
+        if recipient is not None:
+            validate_participant(recipient)
+        if not 1 <= limit <= 100:
+            raise ProtocolError("History limit must be 1–100")
+        qs = urlencode({"limit": limit, **({"to": recipient} if recipient else {})})
+        return parse_site_list(self._request("api/messages?" + qs))
 
     def send(self, msg: dict) -> bool:
         encoded = encode_message(msg)
